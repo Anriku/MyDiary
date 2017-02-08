@@ -7,8 +7,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/left_nav_circle_image"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_margin="20dp"
         android:src="@drawable/left_nav_icon"
         android:layout_gravity="center_vertical"
@@ -23,14 +23,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="昵称:"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:layout_marginTop="50dp"/>
 
         <TextView
             android:id="@+id/left_nav_view_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:text="Anrikuwen"
             android:layout_toRightOf="@id/left_nav_view_nickname"
             android:layout_marginTop="50dp"/>
@@ -40,14 +40,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="信仰:"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:layout_marginTop="100dp"/>
 
         <TextView
             android:id="@+id/left_nav_view_your_belief"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:text="永不言败，说到做到，这就是我的忍道。"
             android:layout_toRightOf="@id/left_nav_view_belief"
             android:layout_marginTop="100dp"/>

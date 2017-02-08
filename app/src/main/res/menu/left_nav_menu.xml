@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/my_diary"
+        android:title="My Diary"
+        android:icon="@mipmap/ic_my_diary"/>
 
+    <item android:id="@+id/notes"
+        android:title="Notes"
+        android:icon="@mipmap/ic_notes"/>
+
+    <item android:id="@+id/password"
+        android:title="Password"
+        android:icon="@mipmap/ic_password"/>
+
+    <item android:id="@+id/settings"
+        android:title="Settings"
+        android:icon="@mipmap/ic_settings"/>
 </menu>
