@@ -16,6 +16,7 @@
         app:tabIndicatorColor="#ff0033"
         app:tabIndicatorHeight="3dp"
         app:tabMode="fixed"
+        android:background="@mipmap/toolbar"
         />
 
     <android.support.v4.view.ViewPager
