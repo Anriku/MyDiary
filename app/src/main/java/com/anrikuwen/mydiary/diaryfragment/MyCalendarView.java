@@ -8,9 +8,6 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 
-import java.util.Calendar;
-import java.util.TimeZone;
-
 /**
  * Created by 10393 on 2017/2/9.
  */
@@ -29,51 +26,10 @@ public class MyCalendarView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
-        String month = String.valueOf(calendar.get(Calendar.MONTH) + 1);
-        if("1".equals(month)){
-            month = "一月";
-        }else if ("2".equals(month)){
-            month = "二月";
-        }else if ("3".equals(month)){
-            month = "三月";
-        }else if ("4".equals(month)){
-            month = "四月";
-        }else if ("5".equals(month)){
-            month = "五月";
-        }else if ("6".equals(month)){
-            month = "六月";
-        }else if ("7".equals(month)){
-            month = "七月";
-        }else if ("8".equals(month)){
-            month = "八月";
-        }else if ("9".equals(month)){
-            month = "九月";
-        }else if ("10".equals(month)){
-            month = "十月";
-        }else if ("11".equals(month)){
-            month = "十一月";
-        }else if ("12".equals(month)){
-            month = "十二月";
-        }
-        String day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
-        String weekDay = String.valueOf(calendar.get(Calendar.DAY_OF_WEEK));
-        if("1".equals(weekDay)){
-            weekDay = "星期天";
-        }else if("2".equals(weekDay)){
-            weekDay = "星期一";
-        }else if("3".equals(weekDay)){
-            weekDay = "星期二";
-        }else if ("4".equals(weekDay)){
-            weekDay = "星期三";
-        }else if ("5".equals(weekDay)){
-            weekDay = "星期四";
-        }else if ("6".equals(weekDay)){
-            weekDay = "星期五";
-        }else if ("7".equals(weekDay)){
-            weekDay = "星期六";
-        }
+
+        String month = DiaryTime.getMonth();
+        String day = DiaryTime.getDay();
+        String weekDay = DiaryTime.getWeekDay();
 
         paint.setColor(Color.parseColor("#99ccff"));
         canvas.drawRect(0,0,getWidth(),getHeight(),paint);

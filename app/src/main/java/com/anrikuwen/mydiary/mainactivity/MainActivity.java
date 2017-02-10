@@ -15,6 +15,8 @@ import android.view.MenuItem;
 import com.anrikuwen.mydiary.R;
 import com.anrikuwen.mydiary.diaryfragment.DiaryActivity;
 
+import org.litepal.tablemanager.Connector;
+
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Connector.getDatabase();
         initView();
     }
 

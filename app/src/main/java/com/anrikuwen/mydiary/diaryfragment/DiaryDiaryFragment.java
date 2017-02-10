@@ -2,13 +2,23 @@ package com.anrikuwen.mydiary.diaryfragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.anrikuwen.mydiary.R;
+import com.anrikuwen.mydiary.database.DiaryData;
+import com.anrikuwen.mydiary.mainactivity.MainActivity;
+
+import org.litepal.tablemanager.Connector;
 
 /**
  * Created by 10393 on 2017/2/9.
@@ -18,12 +28,19 @@ public class DiaryDiaryFragment extends Fragment {
 
     private int[] weatherImages;
     private int[] moodImages;
+    private int[] photoImages;
     private DiarySpinnerAdapter weatherAdapter;
     private DiarySpinnerAdapter moodAdapter;
+    private DiarySpinnerAdapter photoAdapter;
     private Spinner weatherSpinner;
     private Spinner moodSpinner;
+    private Spinner photoSpinner;
     private View view;
-
+    private DiaryData diaryData;
+    private String weatherSelected;
+    private String moodSelected;
+    private EditText titleEdit;
+    private EditText contentEdit;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -32,12 +49,53 @@ public class DiaryDiaryFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         weatherSpinner = (Spinner) view.findViewById(R.id.weather_spinner);
         moodSpinner = (Spinner) view.findViewById(R.id.mood_spinner);
+        photoSpinner = (Spinner) view.findViewById(R.id.photo_spinner);
         initWeather();
         initMood();
+        initPhoto();
+
+        titleEdit = (EditText) view.findViewById(R.id.diary_diary_title_edit);
+        contentEdit = (EditText) view.findViewById(R.id.diary_diary_content_edit);
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.diary_diary_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                storeData();
+            }
+        });
+    }
+
+    private void storeData() {
+        String month = DiaryTime.getMonth();
+        String day = DiaryTime.getDay();
+        String weekDay = DiaryTime.getWeekDay();
+        String time = DiaryTime.getTime();
+        String year = DiaryTime.getYear();
+        Connector.getDatabase();
+        String title = String.valueOf(titleEdit.getText());
+        String content = String.valueOf(contentEdit.getText());
+        diaryData = new DiaryData();
+        diaryData.setDiaryTitle(title);
+        diaryData.setDiaryContent(content);
+        diaryData.setWeather(weatherSelected);
+        diaryData.setMood(moodSelected);
+        diaryData.setDiaryMonth(month);
+        diaryData.setDiaryDay(day);
+        diaryData.setDiaryWeekDay(weekDay);
+        diaryData.setDiaryYear(year);
+        diaryData.setDiaryTime(time);
+        diaryData.save();
+        Toast.makeText(view.getContext(),"保存成功",Toast.LENGTH_SHORT).show();
+    }
+
+    private void initPhoto() {
+        photoImages = new int[]{R.mipmap.ic_take_photo,R.mipmap.ic_choose_from_album};
+        photoAdapter = new DiarySpinnerAdapter(photoImages,view.getContext());
+        photoSpinner.setAdapter(photoAdapter);
     }
 
     private void initWeather() {
@@ -47,6 +105,39 @@ public class DiaryDiaryFragment extends Fragment {
                 , R.mipmap.ic_weather_windy};
         weatherAdapter = new DiarySpinnerAdapter(weatherImages, view.getContext());
         weatherSpinner.setAdapter(weatherAdapter);
+        weatherSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position){
+                    case 5:
+                        weatherSelected = "风";
+                        break;
+                    case 0:
+                        weatherSelected = "晴";
+                        break;
+                    case 4:
+                        weatherSelected = "雪";
+                        break;
+                    case 3:
+                        weatherSelected = "雨";
+                        break;
+                    case 2:
+                        weatherSelected = "雾";
+                        break;
+                    case 1:
+                        weatherSelected = "云";
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
 
@@ -55,6 +146,29 @@ public class DiaryDiaryFragment extends Fragment {
                 , R.mipmap.ic_mood_unhappy};
         moodAdapter = new DiarySpinnerAdapter(moodImages, view.getContext());
         moodSpinner.setAdapter(moodAdapter);
+        moodSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position){
+                    case 0:
+                        moodSelected = "高兴";
+                        break;
+                    case 1:
+                        moodSelected = "一般";
+                        break;
+                    case 2:
+                        moodSelected = "不高兴";
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
 }

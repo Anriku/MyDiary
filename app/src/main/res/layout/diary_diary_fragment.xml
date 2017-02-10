@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#ccff99">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/diary_diary_card_view"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         app:cardCornerRadius="10dp"
@@ -21,9 +23,11 @@
 
 
         <LinearLayout
+            android:id="@+id/diary_diary_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_below="@id/diary_diary_card_view">
 
             <EditText
                 android:id="@+id/diary_diary_title_edit"
@@ -32,6 +36,12 @@
                 android:layout_weight="1"
                 android:maxLines="1"
                 android:hint="标题"/>
+
+            <Spinner
+                android:id="@+id/photo_spinner"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@null"/>
 
             <Spinner
                 android:id="@+id/weather_spinner"
@@ -44,14 +54,25 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@null"/>
+
         </LinearLayout>
 
         <EditText
-            android:id="@+id/diary_diary_text_edit"
+            android:id="@+id/diary_diary_content_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/diary_diary_linear_layout"
             android:hint="Diary"
             android:background="@null"/>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/diary_diary_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:src="@mipmap/ic_fab"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"/>
+
     
-</LinearLayout>
+</RelativeLayout>
