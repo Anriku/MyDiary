@@ -40,7 +40,7 @@ public class DiaryProjectFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.diary_project_recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new DiaryProjectRecAdapter(diaryDatas);
+        adapter = new DiaryProjectRecAdapter(diaryDatas,view.getContext());
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

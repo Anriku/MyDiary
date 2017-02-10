@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".diaryfragment.DiaryActivity" />
-        <activity android:name=".mynotes.NotesActivity"></activity>
+        <activity android:name=".mynotes.NotesActivity" />
+        <activity android:name=".diaryfragment.DiaryProjectRecItemActivity"></activity>
     </application>
 
 </manifest>

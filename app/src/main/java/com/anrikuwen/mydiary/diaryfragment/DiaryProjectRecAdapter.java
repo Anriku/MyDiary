@@ -1,5 +1,8 @@
 package com.anrikuwen.mydiary.diaryfragment;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,9 +23,11 @@ import java.util.List;
 public class DiaryProjectRecAdapter extends RecyclerView.Adapter<DiaryProjectRecAdapter.ViewHolder> {
 
     private List<DiaryData> diaryDatas;
+    private Context context;
 
-    public DiaryProjectRecAdapter(List<DiaryData> diaryDatas) {
+    public DiaryProjectRecAdapter(List<DiaryData> diaryDatas, Context context) {
         this.diaryDatas = diaryDatas;
+        this.context = context;
     }
 
     @Override
@@ -34,13 +39,25 @@ public class DiaryProjectRecAdapter extends RecyclerView.Adapter<DiaryProjectRec
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        DiaryData diaryData = diaryDatas.get(position);
+        final DiaryData diaryData = diaryDatas.get(position);
+
         holder.yearText.setText(diaryData.getDiaryYear());
         holder.monthText.setText(diaryData.getDiaryMonth());
         holder.dayText.setText(diaryData.getDiaryDay());
         holder.weekDayText.setText(diaryData.getDiaryWeekDay());
         holder.timeText.setText(diaryData.getDiaryTime());
         holder.titleText.setText(diaryData.getDiaryTitle());
+
+        holder.RecView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,DiaryProjectRecItemActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("DiaryItemData",diaryData);
+                intent.putExtras(bundle);
+                context.startActivity(intent);
+            }
+        });
 
         switch (diaryData.getWeather()){
             case "晴":
@@ -92,11 +109,13 @@ public class DiaryProjectRecAdapter extends RecyclerView.Adapter<DiaryProjectRec
         TextView weekDayText;
         TextView timeText;
         TextView titleText;
+        View RecView;
 
         ImageView weatherImage;
         ImageView moodImage;
         public ViewHolder(View itemView) {
             super(itemView);
+            RecView = itemView;
             yearText = (TextView) itemView.findViewById(R.id.diary_project_rec_year);
             monthText = (TextView) itemView.findViewById(R.id.diary_project_rec_month);
             dayText = (TextView) itemView.findViewById(R.id.diary_project_rec_day);

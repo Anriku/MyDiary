@@ -2,11 +2,13 @@ package com.anrikuwen.mydiary.database;
 
 import org.litepal.crud.DataSupport;
 
+import java.io.Serializable;
+
 /**
  * Created by 10393 on 2017/2/9.
  */
 
-public class DiaryData extends DataSupport {
+public class DiaryData extends DataSupport implements Serializable {
 
     private String diaryTitle;
     private String diaryContent;
