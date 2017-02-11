@@ -18,8 +18,10 @@
         </activity>
         <activity android:name=".diaryfragment.DiaryActivity" />
         <activity android:name=".mynotes.NotesActivity" />
-        <activity android:name=".diaryfragment.DiaryProjectRecItemActivity"
-            android:theme="@style/ProjectRecItem"></activity>
+        <activity
+            android:name=".diaryfragment.DiaryProjectRecItemActivity"
+            android:theme="@style/ProjectRecItem" />
+        <activity android:name=".diaryfragment.DiaryProjectChangeActivity"></activity>
     </application>
 
 </manifest>

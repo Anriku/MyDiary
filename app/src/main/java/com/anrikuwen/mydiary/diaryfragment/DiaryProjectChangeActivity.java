@@ -1,10 +1,11 @@
 package com.anrikuwen.mydiary.diaryfragment;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anrikuwen.mydiary.R;
@@ -12,44 +13,45 @@ import com.anrikuwen.mydiary.database.DiaryData;
 
 import org.litepal.crud.DataSupport;
 
-import java.util.List;
+public class DiaryProjectChangeActivity extends AppCompatActivity {
 
-public class DiaryProjectRecItemActivity extends AppCompatActivity {
-    private TextView monthText;
-    private TextView dayText;
-    private TextView weekDayText;
-    private TextView timeText;
     private ImageView weatherImage;
     private ImageView moodImage;
-    private TextView titleText;
-    private TextView contentText;
+    private EditText titleEdit;
+    private EditText contentEdit;
     private DiaryData diaryData;
-
+    private FloatingActionButton floatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_diary_diary_rec_item);
-        monthText = (TextView) findViewById(R.id.diary_project_rec_item_month);
-        dayText = (TextView) findViewById(R.id.diary_project_rec_item_day);
-        weekDayText = (TextView) findViewById(R.id.diary_project_rec_item_weekday);
-        timeText = (TextView) findViewById(R.id.diary_project_rec_item_time);
-        weatherImage = (ImageView) findViewById(R.id.diary_project_rec_item_weather);
-        moodImage = (ImageView) findViewById(R.id.diary_project_rec_item_mood);
-        titleText = (TextView) findViewById(R.id.diary_project_rec_item_title);
-        contentText = (TextView) findViewById(R.id.diary_project_rec_item_content);
+        setContentView(R.layout.activity_diary_project_change);
+        weatherImage = (ImageView) findViewById(R.id.diary_project_rec_item_change_weather);
+        moodImage = (ImageView) findViewById(R.id.diary_project_rec_item_change_mood);
+        titleEdit = (EditText) findViewById(R.id.diary_project_rec_item_change_title);
+        contentEdit = (EditText) findViewById(R.id.diary_project_rec_item_change_content);
         diaryData = (DiaryData) getIntent().getSerializableExtra("DiaryItemData");
-        setResource();
+        initView();
+
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.diary_project_rec_change_fab);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                diaryData.setDiaryTitle(String.valueOf(titleEdit.getText()));
+                diaryData.setDiaryContent(String.valueOf(contentEdit.getText()));
+                diaryData.updateAll("diaryYear = ? and diaryMonth = ?" +
+                        "and diaryDay = ? and diaryTime = ?",diaryData.getDiaryYear(),
+                        diaryData.getDiaryMonth(),diaryData.getDiaryDay(),diaryData.getDiaryTime());
+                Toast.makeText(DiaryProjectChangeActivity.this,"修改完成",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
+    private void initView() {
 
-    private void setResource() {
-        monthText.setText(diaryData.getDiaryMonth());
-        dayText.setText(diaryData.getDiaryDay());
-        weekDayText.setText(diaryData.getDiaryWeekDay());
-        timeText.setText(diaryData.getDiaryTime());
-        titleText.setText(diaryData.getDiaryTitle());
-        contentText.setText(diaryData.getDiaryContent());
+        titleEdit.setText(diaryData.getDiaryTitle());
+        contentEdit.setText(diaryData.getDiaryContent());
+
 
         switch (diaryData.getWeather()){
             case "晴":

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_diary_project_change"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardCornerRadius="10dp"
+    tools:context="com.anrikuwen.mydiary.diaryfragment.DiaryProjectChangeActivity">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/diary_project_rec_change_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        app:cardCornerRadius="10dp"
+        android:layout_margin="10dp">
+
+        <com.anrikuwen.mydiary.diaryfragment.MyCalendarView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v7.widget.CardView>
+
+
+    <RelativeLayout
+        android:id="@+id/diary_project_rec_change_image_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/diary_project_rec_change_card_view"
+        android:layout_margin="10dp">
+
+        <ImageView
+            android:id="@+id/diary_project_rec_item_change_weather"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+
+        <ImageView
+            android:id="@+id/diary_project_rec_item_change_mood"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/diary_project_rec_item_change_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_below="@id/diary_project_rec_change_image_layout"
+        android:maxLines="1"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/diary_project_rec_item_change_title">
+
+        <EditText
+            android:id="@+id/diary_project_rec_item_change_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null" />
+
+    </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/diary_project_rec_change_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/ic_fab"
+        android:layout_margin="10dp"
+        />
+
+
+</RelativeLayout>

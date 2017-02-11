@@ -3,6 +3,7 @@ package com.anrikuwen.mydiary.diaryfragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,14 +35,14 @@ public class DiaryProjectFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         diaryDatas = DataSupport.findAll(DiaryData.class);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.diary_project_recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         adapter = new DiaryProjectRecAdapter(diaryDatas,view.getContext());
-        recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        recyclerView.setAdapter(adapter);
     }
 }

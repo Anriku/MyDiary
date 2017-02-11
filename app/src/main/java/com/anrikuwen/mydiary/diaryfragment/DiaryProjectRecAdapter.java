@@ -1,18 +1,27 @@
 package com.anrikuwen.mydiary.diaryfragment;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.anrikuwen.mydiary.R;
 import com.anrikuwen.mydiary.database.DiaryData;
+
+import org.litepal.crud.DataSupport;
 
 import java.util.List;
 
@@ -56,6 +65,42 @@ public class DiaryProjectRecAdapter extends RecyclerView.Adapter<DiaryProjectRec
                 bundle.putSerializable("DiaryItemData",diaryData);
                 intent.putExtras(bundle);
                 context.startActivity(intent);
+            }
+        });
+
+        holder.RecView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Dialog dialog = new Dialog(context);
+                Window dialogWindow = dialog.getWindow();
+                WindowManager.LayoutParams params = dialogWindow.getAttributes();
+                params.gravity = Gravity.CENTER;
+                dialogWindow.setAttributes(params);
+                dialog.setContentView(R.layout.diary_project_rec_item_long_dialog);
+                dialog.show();
+                Button changeButton = (Button) dialog.findViewById(R.id.diary_project_rec_item_chang);
+                Button deleteButton = (Button) dialog.findViewById(R.id.diary_project_rec_item_delete);
+                changeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context,DiaryProjectChangeActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("DiaryItemData",diaryData);
+                        intent.putExtras(bundle);
+                        context.startActivity(intent);
+                    }
+                });
+
+                deleteButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DataSupport.deleteAll(DiaryData.class,"diaryYear = ? and diaryMonth = ?" +
+                                "and diaryDay = ? and diaryTime = ?",diaryData.getDiaryYear(),diaryData.getDiaryMonth()
+                        ,diaryData.getDiaryDay(),diaryData.getDiaryTime());
+                        Toast.makeText(context,"已删除",Toast.LENGTH_SHORT).show();
+                    }
+                });
+                return true;
             }
         });
 

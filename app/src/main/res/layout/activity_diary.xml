@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:tabTextColor="#cccccc"
-        app:tabSelectedTextColor="#99ccff"
+        app:tabSelectedTextColor="#66cc66"
         app:tabTextAppearance="@style/DiaryTabSizeAppearance"
         app:tabIndicatorColor="#ff0033"
         app:tabIndicatorHeight="3dp"
