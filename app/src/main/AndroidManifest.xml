@@ -21,7 +21,10 @@
         <activity
             android:name=".diaryfragment.DiaryProjectRecItemActivity"
             android:theme="@style/ProjectRecItem" />
-        <activity android:name=".diaryfragment.DiaryProjectChangeActivity"></activity>
+        <activity android:name=".diaryfragment.DiaryProjectChangeActivity" />
+        <activity android:name=".password.CreateAndModifyPassword" />
+        <activity android:name=".password.EnsureBeforeModify" />
+        <activity android:name=".password.RetrievePassword"></activity>
     </application>
 
 </manifest>

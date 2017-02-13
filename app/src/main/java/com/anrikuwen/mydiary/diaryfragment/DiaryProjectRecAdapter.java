@@ -71,7 +71,7 @@ public class DiaryProjectRecAdapter extends RecyclerView.Adapter<DiaryProjectRec
         holder.RecView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Dialog dialog = new Dialog(context);
+                final Dialog dialog = new Dialog(context);
                 Window dialogWindow = dialog.getWindow();
                 WindowManager.LayoutParams params = dialogWindow.getAttributes();
                 params.gravity = Gravity.CENTER;
@@ -88,6 +88,7 @@ public class DiaryProjectRecAdapter extends RecyclerView.Adapter<DiaryProjectRec
                         bundle.putSerializable("DiaryItemData",diaryData);
                         intent.putExtras(bundle);
                         context.startActivity(intent);
+                        dialog.cancel();
                     }
                 });
 
@@ -98,6 +99,7 @@ public class DiaryProjectRecAdapter extends RecyclerView.Adapter<DiaryProjectRec
                                 "and diaryDay = ? and diaryTime = ?",diaryData.getDiaryYear(),diaryData.getDiaryMonth()
                         ,diaryData.getDiaryDay(),diaryData.getDiaryTime());
                         Toast.makeText(context,"已删除",Toast.LENGTH_SHORT).show();
+                        dialog.cancel();
                     }
                 });
                 return true;

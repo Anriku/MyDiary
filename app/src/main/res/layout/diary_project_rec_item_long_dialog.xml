@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:cardCornerRadius="10dp"
+    android:layout_margin="3dp">
+
 
     <LinearLayout
-        android:layout_width="200dp"
-        android:layout_height="100dp"
-        android:orientation="vertical"
-        android:layout_centerInParent="true">
-        
+        android:layout_width="300dp"
+        android:layout_height="120dp"
+        android:orientation="vertical">
+
         <Button
             android:id="@+id/diary_project_rec_item_chang"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:text="Change The Data"
-            android:textAllCaps="false"/>
-        
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="修改日记" />
+
         <Button
             android:id="@+id/diary_project_rec_item_delete"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:text="Delete The Data"
-            android:textAllCaps="false"/>
-        
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="删除日记" />
+
     </LinearLayout>
-    
-</RelativeLayout>
+
+</android.support.v7.widget.CardView>

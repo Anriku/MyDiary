@@ -43,6 +43,7 @@ public class DiaryProjectChangeActivity extends AppCompatActivity {
                         "and diaryDay = ? and diaryTime = ?",diaryData.getDiaryYear(),
                         diaryData.getDiaryMonth(),diaryData.getDiaryDay(),diaryData.getDiaryTime());
                 Toast.makeText(DiaryProjectChangeActivity.this,"修改完成",Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
     }

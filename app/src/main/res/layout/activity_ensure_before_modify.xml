@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_ensure_before_modify"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.anrikuwen.mydiary.password.EnsureBeforeModify">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/password_ebm_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="10dp">
+
+        <EditText
+            android:id="@+id/password_ebm_old_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:hint="改写密码前，请输入原密码:"
+            android:inputType="textPassword"
+            android:maxLength="15"
+            android:maxLines="1" />
+
+    </android.support.v7.widget.CardView>
+
+
+    <Button
+        android:id="@+id/password_ebm_ensure_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="确定" />
+
+    <Button
+        android:id="@+id/password_ebm_retrieve_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="找回密码"/>
+
+</LinearLayout>
