@@ -1,9 +1,11 @@
 package com.anrikuwen.mydiary.diaryfragment;
 
 import android.app.Dialog;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -34,9 +36,9 @@ public class DiaryProjectRecAdapter extends RecyclerView.Adapter<DiaryProjectRec
     private List<DiaryData> diaryDatas;
     private Context context;
 
-    public DiaryProjectRecAdapter(List<DiaryData> diaryDatas, Context context) {
-        this.diaryDatas = diaryDatas;
+    public DiaryProjectRecAdapter(Context context, List<DiaryData> diaryDatas) {
         this.context = context;
+        this.diaryDatas = diaryDatas;
     }
 
     @Override
@@ -99,6 +101,9 @@ public class DiaryProjectRecAdapter extends RecyclerView.Adapter<DiaryProjectRec
                                 "and diaryDay = ? and diaryTime = ?",diaryData.getDiaryYear(),diaryData.getDiaryMonth()
                         ,diaryData.getDiaryDay(),diaryData.getDiaryTime());
                         Toast.makeText(context,"已删除",Toast.LENGTH_SHORT).show();
+
+                        DiaryActivity.adapter.notifyDataSetChanged();
+                        DiaryActivity.viewPager.setAdapter(DiaryActivity.adapter);
                         dialog.cancel();
                     }
                 });

@@ -1,8 +1,11 @@
 package com.anrikuwen.mydiary.diaryfragment;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,7 +44,7 @@ public class DiaryProjectFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.diary_project_recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new DiaryProjectRecAdapter(diaryDatas,view.getContext());
+        adapter = new DiaryProjectRecAdapter(view.getContext(),diaryDatas);
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
     }

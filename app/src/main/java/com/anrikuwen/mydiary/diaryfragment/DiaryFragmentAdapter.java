@@ -4,13 +4,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by 10393 on 2017/2/9.
  */
 
-public class DiaryFragmentAdapter extends FragmentPagerAdapter {
+public class DiaryFragmentAdapter extends FragmentPagerAdapter{
 
     private String[] titles;
     private List<Fragment> fragments;
