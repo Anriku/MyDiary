@@ -12,15 +12,15 @@
         android:id="@+id/password_ebm_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        app:cardCornerRadius="10dp">
+        android:layout_margin="@dimen/margin"
+        app:cardCornerRadius="@dimen/card_corner_radius">
 
         <EditText
             android:id="@+id/password_ebm_old_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:hint="改写密码前，请输入原密码:"
+            android:layout_margin="@dimen/margin"
+            android:hint="@string/input_old_password"
             android:inputType="textPassword"
             android:maxLength="15"
             android:maxLines="1" />
@@ -32,12 +32,12 @@
         android:id="@+id/password_ebm_ensure_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="确定" />
+        android:text="@string/ensure" />
 
     <Button
         android:id="@+id/password_ebm_retrieve_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="找回密码"/>
+        android:text="@string/retrieve_password" />
 
 </LinearLayout>

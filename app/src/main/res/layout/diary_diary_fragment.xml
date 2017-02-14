@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ccff99">
+    android:background="@color/light_light_green"
+    android:orientation="vertical">
 
     <android.support.v7.widget.CardView
         android:id="@+id/diary_diary_card_view"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        app:cardCornerRadius="10dp"
-        android:layout_margin="8dp"
-        android:background="@mipmap/toolbar">
+        android:layout_margin="@dimen/margin_twice"
+        android:background="@mipmap/toolbar"
+        app:cardCornerRadius="@dimen/card_corner_radius">
 
         <com.anrikuwen.mydiary.diaryfragment.MyCalendarView
             android:id="@+id/my_calendar_view"
@@ -22,57 +22,63 @@
     </android.support.v7.widget.CardView>
 
 
-        <LinearLayout
-            android:id="@+id/diary_diary_linear_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@id/diary_diary_card_view">
-
-            <EditText
-                android:id="@+id/diary_diary_title_edit"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:maxLines="1"
-                android:hint="标题"/>
-
-            <Spinner
-                android:id="@+id/photo_spinner"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@null"/>
-
-            <Spinner
-                android:id="@+id/weather_spinner"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@null"/>
-
-            <Spinner
-                android:id="@+id/mood_spinner"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@null"/>
-
-        </LinearLayout>
+    <LinearLayout
+        android:id="@+id/diary_diary_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/diary_diary_card_view"
+        android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/diary_diary_content_edit"
-            android:layout_width="match_parent"
+            android:id="@+id/diary_diary_title_edit"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/diary_diary_linear_layout"
-            android:hint="Diary"
-            android:background="@null"/>
+            android:layout_margin="@dimen/margin"
+            android:layout_weight="1"
+            android:hint="@string/title"
+            android:maxLines="1" />
+
+        <Spinner
+            android:id="@+id/photo_spinner"
+            android:layout_width="@dimen/spinner_size"
+            android:layout_height="@dimen/spinner_size"
+            android:layout_margin="@dimen/margin"
+            android:background="@null" />
+
+        <Spinner
+            android:id="@+id/weather_spinner"
+            android:layout_width="@dimen/spinner_size"
+            android:layout_height="@dimen/spinner_size"
+            android:layout_margin="@dimen/margin"
+            android:background="@null" />
+
+        <Spinner
+            android:id="@+id/mood_spinner"
+            android:layout_width="@dimen/spinner_size"
+            android:layout_height="@dimen/spinner_size"
+            android:layout_margin="@dimen/margin"
+            android:background="@null" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/diary_diary_content_edit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/diary_diary_linear_layout"
+        android:layout_margin="@dimen/margin"
+        android:background="@null"
+        android:hint="@string/diary_content"
+        android:text="      " />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/diary_diary_fab"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_margin="10dp"
-        android:src="@mipmap/ic_fab"
+        android:layout_width="@dimen/floating_action_bar_size"
+        android:layout_height="@dimen/floating_action_bar_size"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/margin_twice"
+        android:src="@mipmap/ic_fab" />
 
-    
+
 </RelativeLayout>

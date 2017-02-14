@@ -10,18 +10,19 @@
         android:id="@+id/diary_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        app:tabTextColor="#cccccc"
-        app:tabSelectedTextColor="#66cc66"
-        app:tabTextAppearance="@style/DiaryTabSizeAppearance"
-        app:tabIndicatorColor="#ff0033"
-        app:tabIndicatorHeight="3dp"
-        app:tabMode="fixed"
         android:background="@mipmap/toolbar"
-        />
+        app:tabIndicatorColor="@color/gray"
+        app:tabIndicatorHeight="@dimen/tab_indicator_height"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/light_green"
+        app:tabTextAppearance="@style/DiaryTabSizeAppearance"
+        app:tabTextColor="@color/red" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/diary_view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v4.view.ViewPager>
+        android:layout_height="match_parent">
+
+    </android.support.v4.view.ViewPager>
 
 </LinearLayout>

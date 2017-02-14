@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">MyDiary</string>
+
+    <!--CreateAndModifyActivity-->
+    <string name="input_password">请输入密码:</string>
+    <string name="input_password_again">请再次输入密码:</string>
+    <string name="question">找回密码，辅助问题:</string>
+    <string name="change">点击切换</string>
+
+    <!--EnsureButton-->
+    <string name="ensure">确定</string>
+
+    <!--EnsureBeforeModify-->
+    <string name="input_old_password">改写密码前，请输入原密码:</string>
+    <string name="retrieve_password">找回密码</string>
+
+    <!--RetrievePassword-->
+    <string name="input_answer">请输入相应问题的答案:</string>
+
+    <!--DiaryDiaryFragment-->
+    <string name="title">标题</string>
+    <string name="diary_content">日记内容</string>
+
+    <!--DiaryProjectRecItemLongDialog-->
+    <string name="modify_diary">修改日记</string>
+    <string name="delete_diary">删除日记</string>
+
+    <!--LeftNavLayout-->
+    <string name="nick_name">昵称:</string>
+    <string name="my_nick_name">Anrikuwen</string>
+    <string name="belief">信仰:</string>
+    <string name="my_belief">永不言败，说到做到，这就是我的忍道。</string>
 </resources>
