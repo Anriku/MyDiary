@@ -17,11 +17,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/left_nav_view_nickname_edit_image"
+            android:layout_width="@dimen/image_dimen_min"
+            android:layout_height="@dimen/image_dimen_min"
+            android:layout_marginTop="@dimen/text_view_margin_top"
+            android:layout_toRightOf="@id/left_nav_circle_image"
+            android:src="@mipmap/ic_edit" />
+
         <TextView
             android:id="@+id/left_nav_view_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/text_view_margin_top"
+            android:layout_toRightOf="@id/left_nav_view_nickname_edit_image"
             android:text="@string/nick_name"
             android:textSize="@dimen/text_view_text_size_min" />
 
@@ -34,11 +43,20 @@
             android:text="@string/my_nick_name"
             android:textSize="@dimen/text_view_text_size_min" />
 
+        <ImageView
+            android:id="@+id/left_nav_view_belief_edit_image"
+            android:layout_width="@dimen/image_dimen_min"
+            android:layout_height="@dimen/image_dimen_min"
+            android:layout_marginTop="@dimen/text_view_margin_top_twice"
+            android:layout_toRightOf="@id/left_nav_circle_image"
+            android:src="@mipmap/ic_edit" />
+
         <TextView
             android:id="@+id/left_nav_view_belief"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="@dimen/text_view_margin_top_twice"
+            android:layout_toRightOf="@id/left_nav_view_belief_edit_image"
             android:text="@string/belief"
             android:textSize="@dimen/text_view_text_size_min" />
 
@@ -50,5 +68,6 @@
             android:layout_toRightOf="@id/left_nav_view_belief"
             android:text="@string/my_belief"
             android:textSize="@dimen/text_view_text_size_min" />
+
     </RelativeLayout>
 </LinearLayout>

@@ -44,7 +44,7 @@ public class DiaryProjectRecAdapter extends RecyclerView.Adapter<DiaryProjectRec
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.diary_project_recy_item,parent,false);
+                inflate(R.layout.diary_project_recy_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -62,9 +62,9 @@ public class DiaryProjectRecAdapter extends RecyclerView.Adapter<DiaryProjectRec
         holder.RecView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context,DiaryProjectRecItemActivity.class);
+                Intent intent = new Intent(context, DiaryProjectRecItemActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("DiaryItemData",diaryData);
+                bundle.putSerializable("DiaryItemData", diaryData);
                 intent.putExtras(bundle);
                 context.startActivity(intent);
             }
@@ -85,9 +85,9 @@ public class DiaryProjectRecAdapter extends RecyclerView.Adapter<DiaryProjectRec
                 changeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(context,DiaryProjectChangeActivity.class);
+                        Intent intent = new Intent(context, DiaryProjectChangeActivity.class);
                         Bundle bundle = new Bundle();
-                        bundle.putSerializable("DiaryItemData",diaryData);
+                        bundle.putSerializable("DiaryItemData", diaryData);
                         intent.putExtras(bundle);
                         context.startActivity(intent);
                         dialog.cancel();
@@ -97,10 +97,10 @@ public class DiaryProjectRecAdapter extends RecyclerView.Adapter<DiaryProjectRec
                 deleteButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        DataSupport.deleteAll(DiaryData.class,"diaryYear = ? and diaryMonth = ?" +
-                                "and diaryDay = ? and diaryTime = ?",diaryData.getDiaryYear(),diaryData.getDiaryMonth()
-                        ,diaryData.getDiaryDay(),diaryData.getDiaryTime());
-                        Toast.makeText(context,"已删除",Toast.LENGTH_SHORT).show();
+                        DataSupport.deleteAll(DiaryData.class, "diaryYear = ? and diaryMonth = ?" +
+                                        "and diaryDay = ? and diaryTime = ?", diaryData.getDiaryYear(), diaryData.getDiaryMonth()
+                                , diaryData.getDiaryDay(), diaryData.getDiaryTime());
+                        Toast.makeText(context, "已删除", Toast.LENGTH_SHORT).show();
 
                         DiaryActivity.adapter.notifyDataSetChanged();
                         DiaryActivity.viewPager.setAdapter(DiaryActivity.adapter);
@@ -111,7 +111,7 @@ public class DiaryProjectRecAdapter extends RecyclerView.Adapter<DiaryProjectRec
             }
         });
 
-        switch (diaryData.getWeather()){
+        switch (diaryData.getWeather()) {
             case "晴":
                 holder.weatherImage.setImageResource(R.mipmap.ic_weather_sunny);
                 break;
@@ -134,7 +134,7 @@ public class DiaryProjectRecAdapter extends RecyclerView.Adapter<DiaryProjectRec
                 break;
         }
 
-        switch (diaryData.getMood()){
+        switch (diaryData.getMood()) {
             case "高兴":
                 holder.moodImage.setImageResource(R.mipmap.ic_mood_happy);
                 break;
@@ -165,6 +165,7 @@ public class DiaryProjectRecAdapter extends RecyclerView.Adapter<DiaryProjectRec
 
         ImageView weatherImage;
         ImageView moodImage;
+
         public ViewHolder(View itemView) {
             super(itemView);
             RecView = itemView;

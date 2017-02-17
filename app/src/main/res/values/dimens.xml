@@ -34,4 +34,7 @@
     <dimen name="text_view_margin_top">50dp</dimen>
     <dimen name="text_view_margin_top_twice">100dp</dimen>
 
+    <!--ChangeCircleImageDialog-->
+    <dimen name="circle_dialog_image_size">40dp</dimen>
+
 </resources>
