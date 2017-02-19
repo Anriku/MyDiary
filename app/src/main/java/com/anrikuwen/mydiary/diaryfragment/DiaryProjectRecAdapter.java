@@ -51,7 +51,6 @@ public class DiaryProjectRecAdapter extends RecyclerView.Adapter<DiaryProjectRec
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final DiaryData diaryData = diaryDatas.get(position);
-
         holder.yearText.setText(diaryData.getDiaryYear());
         holder.monthText.setText(diaryData.getDiaryMonth());
         holder.dayText.setText(diaryData.getDiaryDay());
@@ -59,6 +58,9 @@ public class DiaryProjectRecAdapter extends RecyclerView.Adapter<DiaryProjectRec
         holder.timeText.setText(diaryData.getDiaryTime());
         holder.titleText.setText(diaryData.getDiaryTitle());
 
+        /**
+         * 点击RecyclerView的item进行查看内容
+         */
         holder.RecView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +72,9 @@ public class DiaryProjectRecAdapter extends RecyclerView.Adapter<DiaryProjectRec
             }
         });
 
+        /**
+         * 长按RecyclerView的item进行修改和删除对应的日记
+         */
         holder.RecView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -90,7 +95,7 @@ public class DiaryProjectRecAdapter extends RecyclerView.Adapter<DiaryProjectRec
                         bundle.putSerializable("DiaryItemData", diaryData);
                         intent.putExtras(bundle);
                         context.startActivity(intent);
-                        dialog.cancel();
+                        dialog.dismiss();
                     }
                 });
 
@@ -104,7 +109,7 @@ public class DiaryProjectRecAdapter extends RecyclerView.Adapter<DiaryProjectRec
 
                         DiaryActivity.adapter.notifyDataSetChanged();
                         DiaryActivity.viewPager.setAdapter(DiaryActivity.adapter);
-                        dialog.cancel();
+                        dialog.dismiss();
                     }
                 });
                 return true;

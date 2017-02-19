@@ -16,15 +16,9 @@ public class DiaryFragmentAdapter extends FragmentPagerAdapter{
     private String[] titles;
     private List<Fragment> fragments;
 
-    public DiaryFragmentAdapter(FragmentManager fm) {
+    public DiaryFragmentAdapter(FragmentManager fm, String[] titles, List<Fragment> fragments) {
         super(fm);
-    }
-
-    public void setTitles(String[] titles) {
         this.titles = titles;
-    }
-
-    public void setFragments(List<Fragment> fragments) {
         this.fragments = fragments;
     }
 

@@ -12,6 +12,9 @@ import android.view.View;
  * Created by 10393 on 2017/2/9.
  */
 
+/**
+ * 简单的自定义显示日期的控件
+ */
 public class MyCalendarView extends View {
 
     private Paint paint;

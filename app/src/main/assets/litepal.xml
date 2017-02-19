@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
     <dbname value="DiaryDataBase"></dbname>
-    <version value="3"></version>
+    <version value="4"></version>
 
     <list>
         <mapping class="com.anrikuwen.mydiary.database.DiaryData"></mapping>
         <mapping class="com.anrikuwen.mydiary.database.ImageData"></mapping>
+        <mapping class="com.anrikuwen.mydiary.database.CarouselFigureData"></mapping>
     </list>
 </litepal>

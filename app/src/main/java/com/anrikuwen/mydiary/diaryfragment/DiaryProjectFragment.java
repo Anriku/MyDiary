@@ -45,7 +45,6 @@ public class DiaryProjectFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         adapter = new DiaryProjectRecAdapter(view.getContext(),diaryDatas);
-        adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
     }
 }

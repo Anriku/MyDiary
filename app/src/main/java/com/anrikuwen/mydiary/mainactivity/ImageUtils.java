@@ -28,6 +28,7 @@ public class ImageUtils {
     public static final int TAKE_PHOTO = 1;
     public static final int CHOOSE_FROM_ALBUM = 2;
     public static final int CUT_IMAGE = 3;
+    public static final int CHOOSE_IMAGE_AT_CAROUSEL_FIGURE = 4;
 
     public ImageUtils(Context context) {
         this.context = context;
@@ -69,6 +70,23 @@ public class ImageUtils {
         intent.putExtra("outputY",200);
         ((MainActivity)context).startActivityForResult(intent,CHOOSE_FROM_ALBUM);
     }
+
+    public void chooseImageAtCarouselFigure(){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        intent.putExtra("crop",true);
+        intent.putExtra("scale",true);
+        intent.putExtra("return-data",true);
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        intent.putExtra("noFaceDetection",true);
+        intent.putExtra("aspectX",1);
+        intent.putExtra("aspectY",1);
+        intent.putExtra("outputX",200);
+        intent.putExtra("outputY",200);
+        ((MainActivity)context).startActivityForResult(intent,CHOOSE_IMAGE_AT_CAROUSEL_FIGURE);
+    }
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public String handleOnKitKat(Intent intent){

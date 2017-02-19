@@ -21,12 +21,64 @@
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-            <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
 
-            </android.support.v7.widget.RecyclerView>
         </android.support.design.widget.AppBarLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/main_activity_view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#33000000">
+
+                <View
+                    android:id="@+id/main_activity_dot_1"
+                    android:layout_width="@dimen/margin"
+                    android:layout_height="@dimen/margin"
+                    android:layout_margin="@dimen/margin"
+                    android:background="@drawable/dot_normal"/>
+
+                <View
+                    android:id="@+id/main_activity_dot_2"
+                    android:layout_width="@dimen/margin"
+                    android:layout_height="@dimen/margin"
+                    android:layout_margin="@dimen/margin"
+                    android:background="@drawable/dot_normal"/>
+
+                <View
+                    android:id="@+id/main_activity_dot_3"
+                    android:layout_width="@dimen/margin"
+                    android:layout_height="@dimen/margin"
+                    android:layout_margin="@dimen/margin"
+                    android:background="@drawable/dot_normal"/>
+
+                <View
+                    android:id="@+id/main_activity_dot_4"
+                    android:layout_width="@dimen/margin"
+                    android:layout_height="@dimen/margin"
+                    android:layout_margin="@dimen/margin"
+                    android:background="@drawable/dot_normal"/>
+
+                <View
+                    android:id="@+id/main_activity_dot_5"
+                    android:layout_width="@dimen/margin"
+                    android:layout_height="@dimen/margin"
+                    android:layout_margin="@dimen/margin"
+                    android:background="@drawable/dot_normal"/>
+
+            </LinearLayout>
+
+        </FrameLayout>
+
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView

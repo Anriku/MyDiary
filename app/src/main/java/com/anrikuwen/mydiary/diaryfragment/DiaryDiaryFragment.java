@@ -28,13 +28,10 @@ public class DiaryDiaryFragment extends Fragment {
 
     private int[] weatherImages;
     private int[] moodImages;
-    private int[] photoImages;
     private DiarySpinnerAdapter weatherAdapter;
     private DiarySpinnerAdapter moodAdapter;
-    private DiarySpinnerAdapter photoAdapter;
     private Spinner weatherSpinner;
     private Spinner moodSpinner;
-    private Spinner photoSpinner;
     private View view;
     private DiaryData diaryData;
     private String weatherSelected;
@@ -53,10 +50,8 @@ public class DiaryDiaryFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         weatherSpinner = (Spinner) view.findViewById(R.id.weather_spinner);
         moodSpinner = (Spinner) view.findViewById(R.id.mood_spinner);
-        photoSpinner = (Spinner) view.findViewById(R.id.photo_spinner);
         initWeather();
         initMood();
-        initPhoto();
 
         titleEdit = (EditText) view.findViewById(R.id.diary_diary_title_edit);
         contentEdit = (EditText) view.findViewById(R.id.diary_diary_content_edit);
@@ -90,12 +85,6 @@ public class DiaryDiaryFragment extends Fragment {
         diaryData.setDiaryTime(time);
         diaryData.save();
         Toast.makeText(view.getContext(),"保存成功",Toast.LENGTH_SHORT).show();
-    }
-
-    private void initPhoto() {
-        photoImages = new int[]{R.mipmap.ic_take_photo,R.mipmap.ic_choose_from_album};
-        photoAdapter = new DiarySpinnerAdapter(photoImages,view.getContext());
-        photoSpinner.setAdapter(photoAdapter);
     }
 
     private void initWeather() {

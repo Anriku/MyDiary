@@ -7,6 +7,9 @@ import java.util.TimeZone;
  * Created by 10393 on 2017/2/9.
  */
 
+/**
+ * 此类用于获取时间
+ */
 public class DiaryTime {
 
     private static String year;
