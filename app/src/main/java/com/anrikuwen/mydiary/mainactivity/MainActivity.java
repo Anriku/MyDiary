@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.main_activity_view_pager);
         myViewPagerAdapter = new MyViewPagerAdapter(MainActivity.this, imageViews);
         viewPager.setAdapter(myViewPagerAdapter);
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }

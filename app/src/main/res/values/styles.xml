@@ -21,4 +21,12 @@
         <item name="android:windowCloseOnTouchOutside">false</item>
     </style>
 
+    <style name="RadioButton">
+        <item name="android:button">@null</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/radio_button_text_size</item>
+        <item name="android:padding">@dimen/padding</item>
+        <item name="android:textColor">@drawable/text_color_selector</item>
+    </style>
+
 </resources>

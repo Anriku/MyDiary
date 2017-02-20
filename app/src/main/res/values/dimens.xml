@@ -37,4 +37,8 @@
     <!--ChangeCircleImageDialog-->
     <dimen name="circle_dialog_image_size">40dp</dimen>
 
+    <!--RadioButton TextSize-->
+    <dimen name="radio_button_text_size">15sp</dimen>
+    <dimen name="radio_button_width">80dp</dimen>
+
 </resources>
