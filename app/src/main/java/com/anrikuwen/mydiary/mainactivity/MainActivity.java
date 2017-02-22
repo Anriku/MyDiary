@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
     private ImageView beliefEditImage;
     private TextView nickNameText;
     private TextView beliefText;
-
     private int[] imagesId;
     private List<ImageView> imageViews = new ArrayList<>();
     private List<View> views = new ArrayList<>();
@@ -86,12 +85,14 @@ public class MainActivity extends AppCompatActivity {
     private ScheduledExecutorService executor;
     private int currentItem = -1;
     private int oldPosition = 0;
+    private int timeOfCarouselFigure;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             viewPager.setCurrentItem(currentItem);
         }
     };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        SharedPreferences prefTimeOfCarouselFigure = getSharedPreferences("TimeOfCarouselFigure",MODE_PRIVATE);
+        timeOfCarouselFigure = prefTimeOfCarouselFigure.getInt("delayTime",4);
         executor = Executors.newSingleThreadScheduledExecutor();
         executor.scheduleAtFixedRate(new Runnable() {
             @Override
@@ -131,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                 currentItem = (currentItem + 1) % imagesId.length;
                 handler.sendEmptyMessage(0);
             }
-        }, 0, 4, TimeUnit.SECONDS);
+        }, 0, timeOfCarouselFigure, TimeUnit.SECONDS);
     }
 
 

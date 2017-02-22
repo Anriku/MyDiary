@@ -38,11 +38,13 @@
 
     <!--SettingsActivity-->
     <string name="login_text">登录界面语录</string>
-    <string name="password_select">密码选择(选择哪些地方需要密码)</string>
+    <string name="password_select_setting">密码选择(选择哪些地方需要密码)</string>
     <string name="login_text_setting">来一句你喜欢的动漫的经典语录吧！</string>
     <string name="boot_password">启动密码</string>
     <string name="enter_diary_password">进入日记的密码</string>
     <string name="enter_setting_password">进入设置的密码</string>
+    <string name="carousel_time_setting">轮播图间隔时间设置(单位:S)</string>
+    <string name="please_set_your_personal_time">请设置属于你的时间吧:</string>
 
     <!--PasswordAfterLoginActivity-->
     <string name="by_password">通过密码</string>

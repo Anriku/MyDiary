@@ -30,8 +30,13 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
     private CheckBox bootPasswordCheckBox;
     private CheckBox enterDiaryPasswordCheckBox;
     private CheckBox enterSettingPasswordCheckBox;
+    private TextView carouselFigureTextView;
+    private EditText carouselFigureEdit;
+    private Button carouselFigureButton;
+    private CardView carouselFigureCardView;
     private Drawable afterEnterDrawable;
     private Drawable enterDrawable;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,10 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         bootPasswordCheckBox = (CheckBox) findViewById(R.id.setting_password_select_boot_password_CB);
         enterDiaryPasswordCheckBox = (CheckBox) findViewById(R.id.setting_password_select_enter_diary_password_CB);
         enterSettingPasswordCheckBox = (CheckBox) findViewById(R.id.setting_password_enter_setting_password_CB);
+        carouselFigureTextView = (TextView) findViewById(R.id.setting_carousel_figure_time_text);
+        carouselFigureEdit = (EditText) findViewById(R.id.setting_carousel_figure_edit);
+        carouselFigureButton = (Button) findViewById(R.id.setting_carousel_figure_button);
+        carouselFigureCardView = (CardView) findViewById(R.id.setting_carousel_figure_card_view);
 
         afterEnterDrawable = ContextCompat.getDrawable(Settings.this, R.mipmap.ic_after_enter);
         afterEnterDrawable.setBounds(0, 0, afterEnterDrawable.getIntrinsicWidth(), afterEnterDrawable.getIntrinsicHeight());
@@ -54,10 +63,19 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
 
         restoreLoginText();
         restoreCheckBox();
+        restoreCarouselFigureTime();
 
         loginTextTextView.setOnClickListener(this);
         loginTextButton.setOnClickListener(this);
         passwordSelectTextView.setOnClickListener(this);
+        carouselFigureTextView.setOnClickListener(this);
+        carouselFigureButton.setOnClickListener(this);
+    }
+
+    private void restoreCarouselFigureTime() {
+        SharedPreferences prefCarouselFigureTimeData = getSharedPreferences("TimeOfCarouselFigure",MODE_PRIVATE);
+        int time = prefCarouselFigureTimeData.getInt("delayTime",4);
+        carouselFigureEdit.setText(String.valueOf(time));
     }
 
     private void restoreCheckBox() {
@@ -95,6 +113,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                     openLoginSetting();
                 }
                 break;
+
             case R.id.setting_login_text_ensure_button://设置经典语录的Button
                 SharedPreferences.Editor editor = prefLoginTextData.edit();
                 editor.putString("classicQuotations", loginTextEdit.getText().toString());
@@ -102,6 +121,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                 Toast.makeText(Settings.this, "恭喜，保存成功啦", Toast.LENGTH_SHORT).show();
                 closeLoginSetting();
                 break;
+
             case R.id.setting_password_select_text_view://密码选择设置的TextView
                 if (passwordSelectCardView.getVisibility() == View.VISIBLE) {
                     closePasswordSelectSetting();
@@ -109,10 +129,43 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
                     openPasswordSelectSetting();
                 }
                 break;
+
+            case R.id.setting_carousel_figure_time_text://轮播图的时间设置的TextView
+                if (carouselFigureEdit.getVisibility() == View.VISIBLE){
+                    closeCarouselFigureSetting();
+                }else {
+                    openCarouselFigureSetting();
+                }
+                break;
+
+            case R.id.setting_carousel_figure_button:
+                SharedPreferences prefCarouselFigureTimeData = getSharedPreferences("TimeOfCarouselFigure",MODE_PRIVATE);
+                SharedPreferences.Editor timeEditor = prefCarouselFigureTimeData.edit();
+                timeEditor.putInt("delayTime",Integer.valueOf(carouselFigureEdit.getText().toString()));
+                timeEditor.apply();
+                Toast.makeText(Settings.this,"恭喜，亲，保存时间成功",Toast.LENGTH_SHORT).show();
+                closeCarouselFigureSetting();
             default:
                 break;
         }
     }
+
+
+    private void openCarouselFigureSetting() {
+        carouselFigureTextView.setCompoundDrawables(null,null,afterEnterDrawable,null);
+        carouselFigureEdit.setVisibility(View.VISIBLE);
+        carouselFigureButton.setVisibility(View.VISIBLE);
+        carouselFigureCardView.setVisibility(View.VISIBLE);
+    }
+
+    private void closeCarouselFigureSetting() {
+        carouselFigureTextView.setCompoundDrawables(null,null,enterDrawable,null);
+        carouselFigureEdit.setVisibility(View.GONE);
+        carouselFigureButton.setVisibility(View.GONE);
+        carouselFigureCardView.setVisibility(View.GONE);
+    }
+
+
 
     private void openPasswordSelectSetting() {
         passwordSelectTextView.setCompoundDrawables(null, null, afterEnterDrawable, null);
