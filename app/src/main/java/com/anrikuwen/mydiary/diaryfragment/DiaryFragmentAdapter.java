@@ -13,12 +13,10 @@ import java.util.List;
 
 public class DiaryFragmentAdapter extends FragmentPagerAdapter{
 
-    private String[] titles;
     private List<Fragment> fragments;
 
-    public DiaryFragmentAdapter(FragmentManager fm, String[] titles, List<Fragment> fragments) {
+    public DiaryFragmentAdapter(FragmentManager fm, List<Fragment> fragments) {
         super(fm);
-        this.titles = titles;
         this.fragments = fragments;
     }
 
@@ -30,10 +28,5 @@ public class DiaryFragmentAdapter extends FragmentPagerAdapter{
     @Override
     public int getCount() {
         return fragments.size();
-    }
-
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return titles[position];
     }
 }

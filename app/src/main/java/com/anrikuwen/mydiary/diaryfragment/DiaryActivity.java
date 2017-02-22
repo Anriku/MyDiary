@@ -33,9 +33,8 @@ public class DiaryActivity extends AppCompatActivity {
 
     private void initView() {
         viewPager = (ViewPager) findViewById(R.id.diary_view_pager);
-        String[] titles = {"项目", "日历", "日记"};
         List<Fragment> fragments = new ArrayList<>();
-        adapter = new DiaryFragmentAdapter(getSupportFragmentManager(),titles,fragments);
+        adapter = new DiaryFragmentAdapter(getSupportFragmentManager(),fragments);
         projectFragment = new DiaryProjectFragment();
         fragments.add(projectFragment);
         calendarFragment = new DiaryCalendarFragment();
@@ -43,8 +42,10 @@ public class DiaryActivity extends AppCompatActivity {
         diaryFragment = new DiaryDiaryFragment();
         fragments.add(diaryFragment);
         viewPager.setAdapter(adapter);
+
         radioGroup = (RadioGroup) findViewById(R.id.diary_radio_group);
         radioGroup.check(R.id.diary_radio_button_0);
+
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {

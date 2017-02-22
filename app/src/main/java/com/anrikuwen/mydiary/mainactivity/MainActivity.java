@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText dialogEdit;
     private Button dialogButton;
     private NavigationView leftNavigationView;
-    private View hearView;
+    private View headerView;
     private CircleImageView circleImageView;
     private ImageView takePhoto;
     private ImageView chooseFromAlbum;
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         imageUtils = new ImageUtils(this);
         initView();
-        hearView = leftNavigationView.getHeaderView(0);
+        headerView = leftNavigationView.getHeaderView(0);
 
         isExit = false;
 
@@ -250,10 +250,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void changeNickNameAndBelief() {
-        nickNameEditImage = (ImageView) hearView.findViewById(R.id.left_nav_view_nickname_edit_image);
-        beliefEditImage = (ImageView) hearView.findViewById(R.id.left_nav_view_belief_edit_image);
-        nickNameText = (TextView) hearView.findViewById(R.id.left_nav_view_name);
-        beliefText = (TextView) hearView.findViewById(R.id.left_nav_view_your_belief);
+        nickNameEditImage = (ImageView) headerView.findViewById(R.id.left_nav_view_nickname_edit_image);
+        beliefEditImage = (ImageView) headerView.findViewById(R.id.left_nav_view_belief_edit_image);
+        nickNameText = (TextView) headerView.findViewById(R.id.left_nav_view_name);
+        beliefText = (TextView) headerView.findViewById(R.id.left_nav_view_your_belief);
 
         nickNameEditImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -311,7 +311,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void changeCircleImage() {
-        circleImageView = (CircleImageView) hearView.findViewById(R.id.left_nav_circle_image);
+        circleImageView = (CircleImageView) headerView.findViewById(R.id.left_nav_circle_image);
         circleImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

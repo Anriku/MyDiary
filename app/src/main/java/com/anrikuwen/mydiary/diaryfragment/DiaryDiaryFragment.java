@@ -38,6 +38,7 @@ public class DiaryDiaryFragment extends Fragment {
     private String moodSelected;
     private EditText titleEdit;
     private EditText contentEdit;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -84,7 +85,7 @@ public class DiaryDiaryFragment extends Fragment {
         diaryData.setDiaryYear(year);
         diaryData.setDiaryTime(time);
         diaryData.save();
-        Toast.makeText(view.getContext(),"保存成功",Toast.LENGTH_SHORT).show();
+        Toast.makeText(view.getContext(), "保存成功", Toast.LENGTH_SHORT).show();
     }
 
     private void initWeather() {
@@ -97,24 +98,24 @@ public class DiaryDiaryFragment extends Fragment {
         weatherSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position){
-                    case 5:
-                        weatherSelected = "风";
-                        break;
+                switch (position) {
                     case 0:
                         weatherSelected = "晴";
                         break;
-                    case 4:
-                        weatherSelected = "雪";
-                        break;
-                    case 3:
-                        weatherSelected = "雨";
+                    case 1:
+                        weatherSelected = "云";
                         break;
                     case 2:
                         weatherSelected = "雾";
                         break;
-                    case 1:
-                        weatherSelected = "云";
+                    case 3:
+                        weatherSelected = "雨";
+                        break;
+                    case 4:
+                        weatherSelected = "雪";
+                        break;
+                    case 5:
+                        weatherSelected = "风";
                         break;
                     default:
                         break;
@@ -138,7 +139,7 @@ public class DiaryDiaryFragment extends Fragment {
         moodSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position){
+                switch (position) {
                     case 0:
                         moodSelected = "高兴";
                         break;
