@@ -19,14 +19,19 @@
 
 * 6.在主界面做了个轮播图<br>
   * 可以进行长按来通过从相册中选取图片来改变轮播的图片<br>
+* 7.在设置中应用了一些简单的设置<br>
+  * 对启动页的经典语录进行了设置。<br>
+  * 一共有三个地方会用到密码，考虑到密码多了会让人输着烦，于是在设置中进行了密码的选择，选择哪些地方出现密码。<br>
+  * 对主界面的轮播图进行了自定义。<br>
   
 # 用到的知识点:<br>
 * 1.日记方面:<br>
-  * ViewPager+TabLayout+Fragment进行组合。<br>
-  * 通过Spinner进行天气以及心情的图标选择。<br>
+  * ViewPager+RadioGroup+Fragment进行组合,RadioGroup通过selector设置了选中和没选中的不同颜色以及通过Shape的设置设置成了一个ios类型的<br>
+  RadioButton。<br>
+  * 通过Spinner进行天气以及心情的图标选择。<br>
   * 在项目的碎片中进行RecyclerView的使用并实现item的点击以及长按事件。<br>
   * 通过Calendar进行时间、日期的获取,由于多处会用到所以自定义了一个类。<br>
-  * 由于在项目碎片中进行修改以及删除后UI不能立即更新。最初在碎片的onCreateView中用ViewPager的Adapter来notififyDataSetChange。<br>
+  * 由于在项目碎片中进行修改以及删除后UI不能立即更新。最初在碎片的onCreateView中用ViewPager的Adapter来notififyDataSetChange。<br>
   但还是不能立即更新于是通过生命周期在onResume中进行同样的操作。这样删除立即进行UI的更新，但是修改又不行了。这次实在拿它没折了，<br>
   于是在网上看了看他们的解决办法，发现在RecyclerView的Adapter中进行ViewPager的Apater的notifyDataSetChange能行于是就这样做了。<br>
   只是我通过RecyclerView的new Adapter在构造器中添加ViewPager和Adapter进去却不行，就把ViewPager和Adapter设置成了static，这样<br>
@@ -44,12 +49,13 @@
   就这样问题又来了，“我的天，饶了我吧，为什么又闪了”。网上查了一下才知道，哦，原来LitePal不支持图片的存储。那不能图片不能存呀，我要持久化呀。<br>
   后来又查了下才发现，LitePal支持把图片转化为byte数组来进行存储。<br>
   * 从相册中选去图片进行处理。这个后面在头像选择中一起说。<br>
-* 头像的选择:<br>
+* 4.头像的选择:<br>
   * 进行照相选择头像并进行处理后生成头像。<br>
   * 进行从相册中选择图片，从相册中选图片加入了运行时权限。并实现了Android 4.4前后两种不同的获取图片路径的方法。在图片获取后，一般图片还好说。但<br>
   是,照片就太大了会造成手机的卡顿，于是乎，就要对图片进行压缩。最开始通过对图片的质量进行压缩，但是，不管怎么弄都不行，差点还以为不是压缩的问题，<br>
   结果进行比例压缩就行了。但还是不懂为什么按质量进行压缩就不行。哎!<br>
   * 这里也通过LitePal对图片进行了储存，以及开启软件的恢复。<br>
   * 图片的选择以及前面的图片选择进行了一下封装，写成了一个ImageUtils的类，可能封装得不怎么好。<br>
-* 昵称和信仰方面:<br>
-  * 通过ShareedPreferences对其进行存储和恢复。<br>
+* 5.昵称和信仰方面:<br>
+  * 通过ShareedPreferences对其进行存储和恢复。<br>
+* 6.设置方面:<br>
