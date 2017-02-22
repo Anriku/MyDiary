@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -86,10 +87,20 @@ public class MainActivity extends AppCompatActivity {
     private int currentItem = -1;
     private int oldPosition = 0;
     private int timeOfCarouselFigure;
+    private boolean isExit;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            viewPager.setCurrentItem(currentItem);
+            switch (msg.what) {
+                case 0:
+                    viewPager.setCurrentItem(currentItem);
+                    break;
+                case 1:
+                    isExit = false;
+                    break;
+                default:
+                    break;
+            }
         }
     };
 
@@ -100,8 +111,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         imageUtils = new ImageUtils(this);
         initView();
-
         hearView = leftNavigationView.getHeaderView(0);
+
+        isExit = false;
+
 
         changeCircleImage();
         restoreCircleImage();
@@ -109,6 +122,28 @@ public class MainActivity extends AppCompatActivity {
         restoreNickNameAndBelief();
         setImagesInMainActivity();
         restoreImagesInMainActivity();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            exit();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void exit() {
+        if (!isExit) {
+            isExit = true;
+            Toast.makeText(MainActivity.this, "再按一次退出键，退出应用", Toast.LENGTH_SHORT).show();
+            Message message = new Message();
+            message.what = 1;
+            handler.sendMessageDelayed(message, 2000);
+        } else {
+            finish();
+            System.exit(0);
+        }
     }
 
     private void restoreImagesInMainActivity() {
@@ -125,14 +160,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        SharedPreferences prefTimeOfCarouselFigure = getSharedPreferences("TimeOfCarouselFigure",MODE_PRIVATE);
-        timeOfCarouselFigure = prefTimeOfCarouselFigure.getInt("delayTime",4);
+        SharedPreferences prefTimeOfCarouselFigure = getSharedPreferences("TimeOfCarouselFigure", MODE_PRIVATE);
+        timeOfCarouselFigure = prefTimeOfCarouselFigure.getInt("delayTime", 4);
         executor = Executors.newSingleThreadScheduledExecutor();
         executor.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
                 currentItem = (currentItem + 1) % imagesId.length;
-                handler.sendEmptyMessage(0);
+                Message message = new Message();
+                message.what = 0;
+                handler.sendMessage(message);
             }
         }, 0, timeOfCarouselFigure, TimeUnit.SECONDS);
     }
