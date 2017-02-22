@@ -23,7 +23,7 @@ public class RetrievePassword extends AppCompatActivity {
         setContentView(R.layout.activity_retrieve_password);
         retrieveEdit = (EditText) findViewById(R.id.password_rt_retrieve_edit);
         retrieveButton = (Button) findViewById(R.id.password_rt_retrieve_button);
-        final SharedPreferences pref = getSharedPreferences("passwordData",MODE_PRIVATE);
+        final SharedPreferences pref = getSharedPreferences("PasswordData",MODE_PRIVATE);
         String question = pref.getString("question","");
         final String answer = pref.getString("answer","");
         retrieveEdit.setHint(question);

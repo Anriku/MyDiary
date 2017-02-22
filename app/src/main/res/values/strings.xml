@@ -35,4 +35,17 @@
     <string name="project">项目</string>
     <string name="calendar">日历</string>
     <string name="diary">日记</string>
+
+    <!--SettingsActivity-->
+    <string name="login_text">登录界面语录</string>
+    <string name="password_select">密码选择(选择哪些地方需要密码)</string>
+    <string name="login_text_setting">来一句你喜欢的动漫的经典语录吧！</string>
+    <string name="boot_password">启动密码</string>
+    <string name="enter_diary_password">进入日记的密码</string>
+    <string name="enter_setting_password">进入设置的密码</string>
+
+    <!--PasswordAfterLoginActivity-->
+    <string name="by_password">通过密码</string>
+    <string name="by_question">通过问题</string>
+
 </resources>

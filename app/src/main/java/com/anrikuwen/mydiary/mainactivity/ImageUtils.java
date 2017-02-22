@@ -34,9 +34,9 @@ public class ImageUtils {
         this.context = context;
     }
 
-    public void takePhoto(){
-        File file = new File(context.getExternalCacheDir(),"photo_image.jpg");
-        if (file.exists()){
+    public void takePhoto() {
+        File file = new File(context.getExternalCacheDir(), "photo_image.jpg");
+        if (file.exists()) {
             file.delete();
         }
         try {
@@ -44,85 +44,85 @@ public class ImageUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (Build.VERSION.SDK_INT >= 24){
-            imageUri = FileProvider.getUriForFile(context,"com.anrikuwen.mydiary.mainactivity.fileprovider",file);
-        }else {
+        if (Build.VERSION.SDK_INT >= 24) {
+            imageUri = FileProvider.getUriForFile(context, "com.anrikuwen.mydiary.mainactivity.fileprovider", file);
+        } else {
             imageUri = Uri.fromFile(file);
         }
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (hasSDCard()){
-            intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        if (hasSDCard()) {
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         }
-        ((MainActivity)context).startActivityForResult(intent,TAKE_PHOTO);
+        ((MainActivity) context).startActivityForResult(intent, TAKE_PHOTO);
     }
 
-    public void chooseFromAlbum(){
+    public void chooseFromAlbum() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
-        intent.putExtra("crop",true);
-        intent.putExtra("scale",true);
-        intent.putExtra("return-data",true);
+        intent.putExtra("crop", true);
+        intent.putExtra("scale", true);
+        intent.putExtra("return-data", true);
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-        intent.putExtra("noFaceDetection",true);
-        intent.putExtra("aspectX",1);
-        intent.putExtra("aspectY",1);
-        intent.putExtra("outputX",200);
-        intent.putExtra("outputY",200);
-        ((MainActivity)context).startActivityForResult(intent,CHOOSE_FROM_ALBUM);
+        intent.putExtra("noFaceDetection", true);
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("outputX", 200);
+        intent.putExtra("outputY", 200);
+        ((MainActivity) context).startActivityForResult(intent, CHOOSE_FROM_ALBUM);
     }
 
-    public void chooseImageAtCarouselFigure(){
+    public void chooseImageAtCarouselFigure() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
-        intent.putExtra("crop",true);
-        intent.putExtra("scale",true);
-        intent.putExtra("return-data",true);
+        intent.putExtra("crop", true);
+        intent.putExtra("scale", true);
+        intent.putExtra("return-data", true);
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-        intent.putExtra("noFaceDetection",true);
-        intent.putExtra("aspectX",1);
-        intent.putExtra("aspectY",1);
-        intent.putExtra("outputX",200);
-        intent.putExtra("outputY",200);
-        ((MainActivity)context).startActivityForResult(intent,CHOOSE_IMAGE_AT_CAROUSEL_FIGURE);
+        intent.putExtra("noFaceDetection", true);
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("outputX", 200);
+        intent.putExtra("outputY", 200);
+        ((MainActivity) context).startActivityForResult(intent, CHOOSE_IMAGE_AT_CAROUSEL_FIGURE);
     }
-
 
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public String handleOnKitKat(Intent intent){
+    public String handleOnKitKat(Intent intent) {
         String imagePath = null;
         Uri uri = intent.getData();
-        if (DocumentsContract.isDocumentUri(context,uri)){
+        if (DocumentsContract.isDocumentUri(context, uri)) {
             String docId = DocumentsContract.getDocumentId(uri);
-            if ("com.android.providers.media.documents".equals(uri.getAuthority())){
+            if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
                 String id = docId.split(":")[1];
                 String selection = MediaStore.Images.Media._ID + "=" + id;
-                imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,selection);
-            }else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())){
+                imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
+            } else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
                 Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads")
-                        ,Long.valueOf(docId));
-                imagePath = getImagePath(contentUri,null);
+                        , Long.valueOf(docId));
+                imagePath = getImagePath(contentUri, null);
             }
-        }else if ("content".equalsIgnoreCase(uri.getScheme())){
-            imagePath = getImagePath(uri,null);
-        }else if ("file".equalsIgnoreCase(uri.getScheme())){
+        } else if ("content".equalsIgnoreCase(uri.getScheme())) {
+            imagePath = getImagePath(uri, null);
+        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
             imagePath = uri.getPath();
         }
         return imagePath;
     }
 
-    public String handleBeforeKitKat(Intent intent){
+    public String handleBeforeKitKat(Intent intent) {
         Uri uri = intent.getData();
         String imagePath = null;
-        imagePath = getImagePath(uri,null);
+        imagePath = getImagePath(uri, null);
         return imagePath;
     }
 
     private String getImagePath(Uri imageUri, String selection) {
         String path = null;
-        Cursor cursor = context.getContentResolver().query(imageUri,null,selection,null,null);
-        if (cursor != null){
-            if (cursor.moveToFirst()){
+        Cursor cursor = context.getContentResolver().query(imageUri, null, selection, null, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
                 path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
             }
             cursor.close();
@@ -130,11 +130,11 @@ public class ImageUtils {
         return path;
     }
 
-    public Bitmap compressImage(String imagePath,float pixelW,float pixelH){
+    public Bitmap compressImage(String imagePath, float pixelW, float pixelH) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         options.inPreferredConfig = Bitmap.Config.RGB_565;
-        Bitmap bitmap = BitmapFactory.decodeFile(imagePath,options);
+        Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
         options.inJustDecodeBounds = false;
 
         int width = options.outWidth;
@@ -143,37 +143,39 @@ public class ImageUtils {
         float mHeight = pixelH;
 
         int be = 1;
-        if (width > height && width > mWidth){
-            be = (int) (options.outWidth/mWidth);
-        }else if (height > width && height > mHeight){
-            be = (int) (options.outHeight/mHeight);
+        if (width > height && width > mWidth) {
+            be = (int) (options.outWidth / mWidth);
+        } else if (height > width && height > mHeight) {
+            be = (int) (options.outHeight / mHeight);
         }
 
-        if (be <= 0){
+        if (be <= 0) {
             be = 1;
         }
         options.inSampleSize = be;
-        bitmap = BitmapFactory.decodeFile(imagePath,options);
+        bitmap = BitmapFactory.decodeFile(imagePath, options);
         return bitmap;
     }
 
-    public void cropRawPhoto(Uri uri){
+    public void cropRawPhoto(Uri uri) {
         Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setDataAndType(uri,"image/*");
-        intent.putExtra("crop","true");
-        intent.putExtra("return-data",true);
-        intent.putExtra("aspectX",1);
-        intent.putExtra("aspectY",1);
-        intent.putExtra("outputX",200);
-        intent.putExtra("outputY",200);
-        ((MainActivity)context).startActivityForResult(intent,CUT_IMAGE);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.setDataAndType(uri, "image/*");
+        intent.putExtra("crop", "true");
+        intent.putExtra("return-data", true);
+        intent.putExtra("noFaceDetection", true);
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("outputX", 200);
+        intent.putExtra("outputY", 200);
+        ((MainActivity) context).startActivityForResult(intent, CUT_IMAGE);
     }
 
     public boolean hasSDCard() {
         String status = Environment.getExternalStorageState();
-        if (status.equals(Environment.MEDIA_MOUNTED)){
+        if (status.equals(Environment.MEDIA_MOUNTED)) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }

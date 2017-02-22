@@ -44,12 +44,15 @@ import com.anrikuwen.mydiary.database.ImageData;
 import com.anrikuwen.mydiary.diaryfragment.DiaryActivity;
 import com.anrikuwen.mydiary.password.CreateAndModifyPassword;
 import com.anrikuwen.mydiary.password.EnsureBeforeModify;
+import com.anrikuwen.mydiary.settings.Settings;
 
 import org.litepal.crud.DataSupport;
 import org.litepal.tablemanager.Connector;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -95,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         imageUtils = new ImageUtils(this);
-        Connector.getDatabase();
         initView();
 
         hearView = leftNavigationView.getHeaderView(0);
@@ -109,11 +111,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void restoreImagesInMainActivity() {
-        List<CarouselFigureData> carouselFigureDatas = new ArrayList<>();
+        List<CarouselFigureData> carouselFigureDatas;
         carouselFigureDatas = DataSupport.findAll(CarouselFigureData.class);
-        if (carouselFigureDatas.size() != 0){
-            for (CarouselFigureData carouselFigureData:carouselFigureDatas){
-                Bitmap carouselFigureBitmap = BitmapFactory.decodeByteArray(carouselFigureData.getImage(),0,carouselFigureData.getImage().length);
+        if (carouselFigureDatas.size() != 0) {
+            for (CarouselFigureData carouselFigureData : carouselFigureDatas) {
+                Bitmap carouselFigureBitmap = BitmapFactory.decodeByteArray(carouselFigureData.getImage(), 0, carouselFigureData.getImage().length);
                 imageViews.get(carouselFigureData.getImageId()).setImageBitmap(carouselFigureBitmap);
             }
         }
@@ -144,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setImagesInMainActivity() {
         imagesId = new int[]{R.drawable.main_activity_image1, R.drawable.main_activity_image2
-                , R.drawable.main_activity_image3, R.drawable.main_activity_image4,R.drawable.main_activity_image5};
+                , R.drawable.main_activity_image3, R.drawable.main_activity_image4, R.drawable.main_activity_image5};
 
         for (int i = 0; i < imagesId.length; i++) {
             ImageView imageView = new ImageView(MainActivity.this);
@@ -153,10 +155,10 @@ public class MainActivity extends AppCompatActivity {
             imageView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    if (ContextCompat.checkSelfPermission(MainActivity.this,Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                            != PackageManager.PERMISSION_GRANTED){
-                        ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},2);
-                    }else {
+                    if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+                    } else {
                         imageUtils.chooseImageAtCarouselFigure();
                     }
                     return true;
@@ -196,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void restoreNickNameAndBelief() {
-        SharedPreferences pref = getSharedPreferences("hearViewText", MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences("HeaderViewText", MODE_PRIVATE);
         String nickName = pref.getString("nickName", "");
         String belief = pref.getString("belief", "");
         if (!TextUtils.isEmpty(nickName)) {
@@ -226,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         nickNameText.setText(editText.getText());
-                        SharedPreferences pref = getSharedPreferences("hearViewText", MODE_PRIVATE);
+                        SharedPreferences pref = getSharedPreferences("HeaderViewText", MODE_PRIVATE);
                         SharedPreferences.Editor editor = pref.edit();
                         editor.putString("nickName", editText.getText().toString());
                         editor.apply();
@@ -249,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         beliefText.setText(editText.getText());
-                        SharedPreferences pref = getSharedPreferences("hearViewText", MODE_PRIVATE);
+                        SharedPreferences pref = getSharedPreferences("HeaderViewText", MODE_PRIVATE);
                         SharedPreferences.Editor editor = pref.edit();
                         editor.putString("belief", editText.getText().toString());
                         editor.apply();
@@ -316,10 +318,10 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             case 2:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     imageUtils.chooseImageAtCarouselFigure();
-                }else {
-                    Toast.makeText(MainActivity.this,"你拒绝了应用获取读取SD卡的权限，想要读取SD卡请授权",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MainActivity.this, "你拒绝了应用获取读取SD卡的权限，想要读取SD卡请授权", Toast.LENGTH_SHORT).show();
                 }
                 break;
             default:
@@ -371,7 +373,7 @@ public class MainActivity extends AppCompatActivity {
                     imageViews.get(currentItem).setImageBitmap(carouselFigureBitmap);
                     storeCarouselFigureBitmap(carouselFigureBitmap);
                 }
-                    break;
+                break;
             case ImageUtils.CUT_IMAGE:
                 if (data != null) {
                     Bundle bundle = data.getExtras();
@@ -387,13 +389,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void storeCarouselFigureBitmap(Bitmap carouselFigureBitmap) {
         CarouselFigureData carouselFigureData = new CarouselFigureData();
-        List<CarouselFigureData> carouselFigureDatas = new ArrayList<>();
-        carouselFigureDatas = DataSupport.where("imageId = ?","currentItem").find(CarouselFigureData.class);
-        if (carouselFigureDatas.size() != 0){
-            DataSupport.deleteAll("imageId = ?","currentItem");
+        List<CarouselFigureData> carouselFigureDatas;
+        carouselFigureDatas = DataSupport.where("imageId = ?", "currentItem").find(CarouselFigureData.class);
+        if (carouselFigureDatas.size() != 0) {
+            DataSupport.deleteAll("imageId = ?", "currentItem");
         }
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        carouselFigureBitmap.compress(Bitmap.CompressFormat.JPEG,100,baos);
+        carouselFigureBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         carouselFigureData.setImageId(currentItem);
         carouselFigureData.setImage(baos.toByteArray());
         carouselFigureData.saveFast();
@@ -448,6 +450,8 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_menu_password:
                         setPassword();
                         break;
+                    case R.id.nav_menu_settings:
+                        enterSetting();
                     default:
                         break;
                 }
@@ -456,36 +460,78 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void enterSetting() {
+        SharedPreferences prefPasswordData = getSharedPreferences("PasswordData", MODE_PRIVATE);
+        final String password = prefPasswordData.getString("password", "");
+        SharedPreferences prefPasswordSelectData = getSharedPreferences("PasswordSelectData", MODE_PRIVATE);
+        boolean isEnterSettingPasswordChecked = prefPasswordSelectData.getBoolean("isEnterSettingPasswordChecked", true);
+        if (isEnterSettingPasswordChecked) {
+            if (TextUtils.isEmpty(password)) {
+                Intent intent = new Intent(MainActivity.this, Settings.class);
+                startActivity(intent);
+            } else {
+                final Dialog dialog = getDialog();
+                dialog.setContentView(R.layout.enter_diary_dialog);
+                dialog.show();
+                dialogEdit = (EditText) dialog.findViewById(R.id.enter_diary_dialog_edit);
+                dialogButton = (Button) dialog.findViewById(R.id.enter_diary_dialog_button);
+                dialogButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if ((String.valueOf(password)).equals(String.valueOf(dialogEdit.getText()))) {
+                            Intent intent = new Intent(MainActivity.this, Settings.class);
+                            startActivity(intent);
+                            dialog.dismiss();
+                        } else {
+                            Toast.makeText(MainActivity.this, "输入的密码有错哟，请从新输入", Toast.LENGTH_SHORT).show();
+                            dialogEdit.setText("");
+                        }
+                    }
+                });
+            }
+        } else {
+            Intent intent = new Intent(MainActivity.this, Settings.class);
+            startActivity(intent);
+        }
+    }
+
     private void enterDiary() {
-        SharedPreferences preferences = getSharedPreferences("passwordData", MODE_PRIVATE);
-        final String password = preferences.getString("password", "");
-        if (TextUtils.isEmpty(password)) {
+        SharedPreferences prefPasswordData = getSharedPreferences("PasswordData", MODE_PRIVATE);
+        final String password = prefPasswordData.getString("password", "");
+        SharedPreferences prefPasswordSelectData = getSharedPreferences("PasswordSelectData", MODE_PRIVATE);
+        boolean isEnterDiaryPasswordChecked = prefPasswordSelectData.getBoolean("isEnterDiaryPasswordChecked", true);
+        if (isEnterDiaryPasswordChecked) {
+            if (TextUtils.isEmpty(password)) {
+                Intent intent = new Intent(MainActivity.this, DiaryActivity.class);
+                startActivity(intent);
+            } else {
+                final Dialog dialog = getDialog();
+                dialog.setContentView(R.layout.enter_diary_dialog);
+                dialog.show();
+                dialogEdit = (EditText) dialog.findViewById(R.id.enter_diary_dialog_edit);
+                dialogButton = (Button) dialog.findViewById(R.id.enter_diary_dialog_button);
+                dialogButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if ((String.valueOf(password)).equals(String.valueOf(dialogEdit.getText()))) {
+                            Intent intent = new Intent(MainActivity.this, DiaryActivity.class);
+                            startActivity(intent);
+                            dialog.dismiss();
+                        } else {
+                            Toast.makeText(MainActivity.this, "输入的密码有错哟，请从新输入", Toast.LENGTH_SHORT).show();
+                            dialogEdit.setText("");
+                        }
+                    }
+                });
+            }
+        } else {
             Intent intent = new Intent(MainActivity.this, DiaryActivity.class);
             startActivity(intent);
-        } else {
-            final Dialog dialog = getDialog();
-            dialog.setContentView(R.layout.enter_diary_dialog);
-            dialog.show();
-            dialogEdit = (EditText) dialog.findViewById(R.id.enter_diary_dialog_edit);
-            dialogButton = (Button) dialog.findViewById(R.id.enter_diary_dialog_button);
-            dialogButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if ((String.valueOf(password)).equals(String.valueOf(dialogEdit.getText()))) {
-                        Intent intent = new Intent(MainActivity.this, DiaryActivity.class);
-                        startActivity(intent);
-                        dialog.dismiss();
-                    } else {
-                        Toast.makeText(MainActivity.this, "输入的密码有错哟，请从新输入", Toast.LENGTH_SHORT).show();
-                        dialogEdit.setText("");
-                    }
-                }
-            });
         }
     }
 
     private void setPassword() {
-        SharedPreferences preferences = getSharedPreferences("passwordData", MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("PasswordData", MODE_PRIVATE);
         String password = preferences.getString("password", "");
         if (TextUtils.isEmpty(password)) {
             Intent intent = new Intent(MainActivity.this, CreateAndModifyPassword.class);

@@ -28,7 +28,7 @@ public class EnsureBeforeModify extends AppCompatActivity {
         ensureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences pref = getSharedPreferences("passwordData",MODE_PRIVATE);
+                SharedPreferences pref = getSharedPreferences("PasswordData",MODE_PRIVATE);
                 String password = pref.getString("password","");
                 if(password.equals(String.valueOf(oldPasswordEdit.getText()))){
                     Intent intent = new Intent(EnsureBeforeModify.this,CreateAndModifyPassword.class);
