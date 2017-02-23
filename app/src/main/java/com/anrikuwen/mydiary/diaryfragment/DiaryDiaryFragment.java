@@ -86,6 +86,9 @@ public class DiaryDiaryFragment extends Fragment {
         diaryData.setDiaryTime(time);
         diaryData.save();
         Toast.makeText(view.getContext(), "保存成功", Toast.LENGTH_SHORT).show();
+        titleEdit.setText("");
+        contentEdit.setText("");
+        DiaryActivity.viewPager.setCurrentItem(0);
     }
 
     private void initWeather() {

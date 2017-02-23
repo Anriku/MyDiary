@@ -38,21 +38,21 @@ public class MyCalendarView extends View {
         canvas.drawRect(0,0,getWidth(),getHeight(),paint);
 
         paint.setColor(Color.WHITE);
-        paint.setTextSize(80);
+        paint.setTextSize(60);
         paint.getTextBounds(month,0,month.length(),bounds);
         float monthWidth = bounds.width();
         float monthHeight = bounds.height();
         canvas.drawText(month,getWidth()/2 - monthWidth/2,monthHeight*2,paint);
 
         paint.setColor(Color.WHITE);
-        paint.setTextSize(250);
+        paint.setTextSize(230);
         paint.getTextBounds(day,0,day.length(),bounds);
         float dayWidth = bounds.width();
         float dayHeight = bounds.height();
         canvas.drawText(day,getWidth()/2 - dayWidth/2,getHeight()/2 + dayHeight/2,paint);
 
         paint.setColor(Color.WHITE);
-        paint.setTextSize(80);
+        paint.setTextSize(60);
         paint.getTextBounds(weekDay,0,weekDay.length(),bounds);
         float weekDayWidth = bounds.width();
         float weekDayHeight = bounds.height();

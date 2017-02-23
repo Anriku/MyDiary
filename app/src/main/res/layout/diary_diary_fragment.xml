@@ -18,7 +18,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_margin="@dimen/margin_twice"
-                android:background="@mipmap/toolbar"
                 app:cardCornerRadius="@dimen/card_corner_radius">
 
                 <com.anrikuwen.mydiary.diaryfragment.MyCalendarView
@@ -65,11 +64,6 @@
                     android:background="@null" />
 
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray" />
 
             <EditText
                 android:id="@+id/diary_diary_content_edit"
