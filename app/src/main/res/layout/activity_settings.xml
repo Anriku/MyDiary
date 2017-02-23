@@ -46,7 +46,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/ensure"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:background="@drawable/button_selector"/>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
@@ -152,7 +153,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/ensure"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:background="@drawable/button_selector"/>
 
         </LinearLayout>
 
