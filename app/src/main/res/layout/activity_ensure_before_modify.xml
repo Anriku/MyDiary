@@ -5,6 +5,7 @@
     android:id="@+id/activity_ensure_before_modify"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     android:orientation="vertical"
     tools:context="com.anrikuwen.mydiary.password.EnsureBeforeModify">
 
@@ -12,7 +13,8 @@
         android:id="@+id/password_ebm_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin"
+        android:layout_marginBottom="@dimen/margin"
+        android:layout_marginTop="@dimen/margin_twice"
         app:cardCornerRadius="@dimen/card_corner_radius">
 
         <EditText
@@ -32,12 +34,18 @@
         android:id="@+id/password_ebm_ensure_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin"
+        android:layout_marginTop="@dimen/margin"
+        android:background="@drawable/button_selector"
         android:text="@string/ensure" />
 
     <Button
         android:id="@+id/password_ebm_retrieve_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin"
+        android:layout_marginTop="@dimen/margin"
+        android:background="@drawable/button_selector"
         android:text="@string/retrieve_password" />
 
 </LinearLayout>

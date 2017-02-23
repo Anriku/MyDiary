@@ -46,7 +46,8 @@
             android:id="@+id/enter_diary_dialog_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/ensure" />
+            android:text="@string/ensure"
+            android:background="@drawable/button_selector"/>
     </LinearLayout>
 
 </LinearLayout>

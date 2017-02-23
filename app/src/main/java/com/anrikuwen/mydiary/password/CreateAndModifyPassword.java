@@ -1,6 +1,8 @@
 package com.anrikuwen.mydiary.password;
 
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -22,6 +24,7 @@ public class CreateAndModifyPassword extends AppCompatActivity {
             , "你最喜欢的一首歌是:", "你最想去的地方是:", "你最崇拜的人是:"};
     private int questionNum = 0;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,18 +34,19 @@ public class CreateAndModifyPassword extends AppCompatActivity {
         ensureButton = (Button) findViewById(R.id.password_cam_ensure_button);
         questionEdit = (EditText) findViewById(R.id.password_cam_question_edit);
         questionButton = (Button) findViewById(R.id.password_cam_question_button);
+        questionEdit.setHint(questions[questionNum]);
+
         ensureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createPassword();
             }
         });
-
         questionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                questionEdit.setHint(questions[questionNum]);
                 questionNum++;
+                questionEdit.setHint(questions[questionNum]);
             }
         });
     }
@@ -56,7 +60,7 @@ public class CreateAndModifyPassword extends AppCompatActivity {
             SharedPreferences.Editor editor = pref.edit();
             editor.putString("password", String.valueOf(firstEdit.getText()));
             editor.putString("answer", String.valueOf(questionEdit.getText()));
-            editor.putString("question", String.valueOf(questions[questionNum - 1]));
+            editor.putString("question", String.valueOf(questions[questionNum]));
             editor.apply();
             Toast.makeText(this, "设置成功啦", Toast.LENGTH_SHORT).show();
             finish();

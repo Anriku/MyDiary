@@ -18,14 +18,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin"
-            android:text="@string/modify_diary" />
+            android:text="@string/modify_diary"
+            android:background="@drawable/button_selector"/>
 
         <Button
             android:id="@+id/diary_project_rec_item_delete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin"
-            android:text="@string/delete_diary" />
+            android:text="@string/delete_diary"
+            android:background="@drawable/button_selector"/>
 
     </LinearLayout>
 

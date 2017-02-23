@@ -41,6 +41,7 @@ public class DiaryActivity extends AppCompatActivity {
         fragments.add(calendarFragment);
         diaryFragment = new DiaryDiaryFragment();
         fragments.add(diaryFragment);
+        adapter.notifyDataSetChanged();
         viewPager.setAdapter(adapter);
 
         radioGroup = (RadioGroup) findViewById(R.id.diary_radio_group);
@@ -97,11 +98,13 @@ public class DiaryActivity extends AppCompatActivity {
 
 
     /**
-     * 此方法用于删除对应的日记后更新DiaryDiaryFragment的界面
+     * 此方法用于修改对应的日记后更新DiaryDiaryFragment的界面，但这样做
+     * 还会存在一个bug就是当在日历和日记的碎片中让其进入后台后再回来会自动跳到项目的碎片中
      */
     @Override
     protected void onResume() {
         super.onResume();
+        radioGroup.check(R.id.diary_radio_button_0);
         adapter.notifyDataSetChanged();
         viewPager.setAdapter(adapter);
     }

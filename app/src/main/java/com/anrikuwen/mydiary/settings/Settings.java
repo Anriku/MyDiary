@@ -176,6 +176,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
     }
 
     private void closePasswordSelectSetting() {
+        passwordSelectTextView.setCompoundDrawables(null,null,enterDrawable,null);
         passwordSelectCardView.setVisibility(View.GONE);
         bootPasswordCheckBox.setVisibility(View.GONE);
         enterSettingPasswordCheckBox.setVisibility(View.GONE);
