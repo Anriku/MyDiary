@@ -8,22 +8,25 @@
         android:layout_width="100dp"
         android:layout_height="60dp"
         android:background="@color/gray"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/change_circle_image_dialog_take_photo_image"
-            android:layout_width="@dimen/circle_dialog_image_size"
-            android:layout_height="@dimen/circle_dialog_image_size"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:layout_margin="@dimen/margin"
+            android:layout_weight="1"
+            android:background="@drawable/image_selector"
             android:src="@mipmap/ic_take_photo" />
 
         <ImageView
             android:id="@+id/change_circle_image_dialog_choose_from_album_image"
-            android:layout_width="@dimen/circle_dialog_image_size"
-            android:layout_height="@dimen/circle_dialog_image_size"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:layout_margin="@dimen/margin"
+            android:layout_weight="1"
+            android:background="@drawable/image_selector"
             android:src="@mipmap/ic_choose_from_album" />
     </LinearLayout>
 

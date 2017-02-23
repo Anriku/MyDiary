@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
     private int oldPosition = 0;
     private int timeOfCarouselFigure;
     private boolean isExit;
+    private Dialog circleImageDialog;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -315,7 +316,7 @@ public class MainActivity extends AppCompatActivity {
         circleImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Dialog circleImageDialog = getDialog();
+                circleImageDialog = getDialog();
                 circleImageDialog.setContentView(R.layout.change_circle_image_dialog);
                 circleImageDialog.show();
                 takePhoto = (ImageView) circleImageDialog.findViewById(R.id.change_circle_image_dialog_take_photo_image);
@@ -353,8 +354,10 @@ public class MainActivity extends AppCompatActivity {
             case 1:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     imageUtils.chooseFromAlbum();
+                    circleImageDialog.dismiss();
                 } else {
                     Toast.makeText(MainActivity.this, "你拒绝了应用获取读取SD卡的权限，想要读取SD卡请授权", Toast.LENGTH_SHORT).show();
+                    circleImageDialog.dismiss();
                 }
                 break;
             case 2:
