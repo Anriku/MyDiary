@@ -74,3 +74,15 @@
   呵，大哥别吓我了，又点点昵称。哎!还是不行，查查才发现NavigationView中的控件要通过NavigtionView的实例进行getHeaderView()来实例化一个HeaderView,
   再通过这个View来findViewById()来实例化里面的控件。这和Dialog通过自定义Layout来实例化里面的控件是一样的。<br>
   * 通过覆盖onKeyDown()方法并结合Handler来进行了按两次Back键退出应用，防止用户按错。<br>
+
+# 下面通过几张gif来演示一下各个功能：
+* 日记部分:<br>
+![日记部分](http://i1.piimg.com/567571/c03c14929e7d2b7f.gif "日记部分")<br>
+* 密码部分:<br>
+![密码部分](http://p1.bpimg.com/567571/fcf39cb53be47ba5.gif "密码部分")<br>
+* 设置部分:<br>
+![设置部分](http://p1.bpimg.com/567571/daddf0e70baaec79.gif "设置部分")<br>
+* HeaderView部分:<br>
+![HearView](http://p1.bqimg.com/567571/a8529d2b6f3dde31.gif "轮播图部分")<br>
+* 轮播图部分:<br>
+![轮播图部分](http://p1.bpimg.com/567571/b3808adbe659ca58.gif "轮播图部分")<br>
