@@ -5,6 +5,7 @@
     android:id="@+id/activity_settings"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     android:orientation="vertical"
     tools:context="com.anrikuwen.mydiary.settings.Settings">
 
@@ -129,9 +130,9 @@
         android:id="@+id/setting_carousel_figure_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="@dimen/card_corner_radius"
         android:layout_margin="@dimen/margin"
-        android:visibility="gone">
+        android:visibility="gone"
+        app:cardCornerRadius="@dimen/card_corner_radius">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -144,14 +145,14 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/please_set_your_personal_time"
                 android:inputType="number"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/setting_carousel_figure_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/ensure"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
         </LinearLayout>
 
