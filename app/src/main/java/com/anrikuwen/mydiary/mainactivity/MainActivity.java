@@ -35,7 +35,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,15 +47,11 @@ import com.anrikuwen.mydiary.password.EnsureBeforeModify;
 import com.anrikuwen.mydiary.settings.Settings;
 
 import org.litepal.crud.DataSupport;
-import org.litepal.tablemanager.Connector;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -110,12 +105,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        imageUtils = new ImageUtils(this);
         initView();
-        headerView = leftNavigationView.getHeaderView(0);
-
-        isExit = false;
-
+        setNavigationViewListener();
 
         changeCircleImage();
         restoreCircleImage();
@@ -125,38 +116,6 @@ public class MainActivity extends AppCompatActivity {
         restoreImagesInMainActivity();
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            exit();
-            return false;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-    private void exit() {
-        if (!isExit) {
-            isExit = true;
-            Toast.makeText(MainActivity.this, "再按一次退出键，退出应用", Toast.LENGTH_SHORT).show();
-            Message message = new Message();
-            message.what = 1;
-            handler.sendMessageDelayed(message, 2000);
-        } else {
-            finish();
-            System.exit(0);
-        }
-    }
-
-    private void restoreImagesInMainActivity() {
-        List<CarouselFigureData> carouselFigureDatas;
-        carouselFigureDatas = DataSupport.findAll(CarouselFigureData.class);
-        if (carouselFigureDatas.size() != 0) {
-            for (CarouselFigureData carouselFigureData : carouselFigureDatas) {
-                Bitmap carouselFigureBitmap = BitmapFactory.decodeByteArray(carouselFigureData.getImage(), 0, carouselFigureData.getImage().length);
-                imageViews.get(carouselFigureData.getImageId()).setImageBitmap(carouselFigureBitmap);
-            }
-        }
-    }
 
     @Override
     protected void onStart() {
@@ -185,6 +144,200 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+        }
+        return true;
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 1:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    imageUtils.chooseFromAlbum();
+                    circleImageDialog.dismiss();
+                } else {
+                    Toast.makeText(MainActivity.this, "你拒绝了应用获取读取SD卡的权限，想要读取SD卡请授权", Toast.LENGTH_SHORT).show();
+                    circleImageDialog.dismiss();
+                }
+                break;
+            case 2:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    imageUtils.chooseImageAtCarouselFigure();
+                } else {
+                    Toast.makeText(MainActivity.this, "你拒绝了应用获取读取SD卡的权限，想要读取SD卡请授权", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            //通过照相获取头像，然后进行处理
+            case ImageUtils.TAKE_PHOTO:
+                if (resultCode == RESULT_OK) {
+                    if (imageUtils.hasSDCard()) {
+                        File tempFile = new File(getExternalCacheDir(), "photo_image.jpg");
+                        Uri tempUri = null;
+                        if (Build.VERSION.SDK_INT >= 24) {
+                            tempUri = FileProvider.getUriForFile(MainActivity.this, "com.anrikuwen.mydiary.mainactivity.fileprovider", tempFile);
+                        } else {
+                            tempUri = Uri.fromFile(tempFile);
+                        }
+                        imageUtils.cropRawPhoto(tempUri);
+                    } else {
+                        Toast.makeText(MainActivity.this, "没有SD卡", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                break;
+            //通过从相册中获取图片然后进行处理
+            case ImageUtils.CHOOSE_FROM_ALBUM:
+                String imagePath;
+                if (resultCode == RESULT_OK) {
+                    if (Build.VERSION.SDK_INT >= 19) {
+                        imagePath = imageUtils.handleOnKitKat(data);
+                    } else {
+                        imagePath = imageUtils.handleBeforeKitKat(data);
+                    }
+                    Bitmap imageBitmap = imageUtils.compressImage(imagePath, 400, 400);
+                    circleImageView.setImageBitmap(imageBitmap);
+                    storeImageBitmap(imageBitmap);
+                }
+                break;
+            //对轮播图从相册中获取的图片进行出来
+            case ImageUtils.CHOOSE_IMAGE_AT_CAROUSEL_FIGURE:
+                String carouselFigureImagePath;
+                if (resultCode == RESULT_OK) {
+                    if (Build.VERSION.SDK_INT >= 19) {
+                        carouselFigureImagePath = imageUtils.handleOnKitKat(data);
+                    } else {
+                        carouselFigureImagePath = imageUtils.handleBeforeKitKat(data);
+                    }
+                    Bitmap carouselFigureBitmap = imageUtils.compressImage(carouselFigureImagePath, 400, 800);
+                    imageViews.get(currentItem).setImageBitmap(carouselFigureBitmap);
+                    storeCarouselFigureBitmap(carouselFigureBitmap);
+                }
+                break;
+            //照相后进行剪切
+            case ImageUtils.CUT_IMAGE:
+                if (data != null) {
+                    Bundle bundle = data.getExtras();
+                    if (bundle != null) {
+                        Bitmap bitmap = bundle.getParcelable("data");
+                        circleImageView.setImageBitmap(bitmap);
+                        storeImageBitmap(bitmap);
+                    }
+                }
+                break;
+        }
+    }
+
+    //此方法用于双击back键退出程序
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            exit();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    //在这里使用了handler来实现2秒内用户无操作isExit自动切换为false
+    private void exit() {
+        if (!isExit) {
+            isExit = true;
+            Toast.makeText(MainActivity.this, "再按一次退出键，退出应用", Toast.LENGTH_SHORT).show();
+            Message message = new Message();
+            message.what = 1;
+            handler.sendMessageDelayed(message, 2000);
+        } else {
+            finish();
+            System.exit(0);
+        }
+    }
+
+
+    //进行初始化控件
+    private void initView() {
+        isExit = false;
+        imageUtils = new ImageUtils(this);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        leftNavigationView = (NavigationView) findViewById(R.id.left_nav_view);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.mipmap.ic_nav_menu);
+        }
+        //获取NavigationView的HeaderView通过它去实例化HeaderView中的控件
+        headerView = leftNavigationView.getHeaderView(0);
+    }
+
+    //设置NavigationView菜单的点击事件
+    private void setNavigationViewListener() {
+        leftNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_menu_diary:
+                        enterDiary();
+                        break;
+                    case R.id.nav_menu_password:
+                        setPassword();
+                        break;
+                    case R.id.nav_menu_settings:
+                        enterSetting();
+                    default:
+                        break;
+                }
+                return true;
+            }
+        });
+    }
+
+
+    //设置密码
+    private void setPassword() {
+        SharedPreferences preferences = getSharedPreferences("PasswordData", MODE_PRIVATE);
+        String password = preferences.getString("password", "");
+        if (TextUtils.isEmpty(password)) {
+            Intent intent = new Intent(MainActivity.this, CreateAndModifyPassword.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(MainActivity.this, EnsureBeforeModify.class);
+            startActivity(intent);
+        }
+    }
+
+
+    //如果自定义了图片，重启程序后进行轮播图片的恢复
+    private void restoreImagesInMainActivity() {
+        List<CarouselFigureData> carouselFigureDatas;
+        carouselFigureDatas = DataSupport.findAll(CarouselFigureData.class);
+        if (carouselFigureDatas.size() != 0) {
+            for (CarouselFigureData carouselFigureData : carouselFigureDatas) {
+                Bitmap carouselFigureBitmap = BitmapFactory.decodeByteArray(carouselFigureData.getImage(), 0, carouselFigureData.getImage().length);
+                imageViews.get(carouselFigureData.getImageId()).setImageBitmap(carouselFigureBitmap);
+            }
+        }
+    }
+
+
+    //对轮播图片的具体设置
     private void setImagesInMainActivity() {
         imagesId = new int[]{R.drawable.main_activity_image1, R.drawable.main_activity_image2
                 , R.drawable.main_activity_image3, R.drawable.main_activity_image4, R.drawable.main_activity_image5};
@@ -238,6 +391,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //如果对昵称进行了修改，这里实现重启程序后的恢复
     private void restoreNickNameAndBelief() {
         SharedPreferences pref = getSharedPreferences("HeaderViewText", MODE_PRIVATE);
         String nickName = pref.getString("nickName", "");
@@ -250,6 +404,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //进行具体的昵称以及信仰的修改
     private void changeNickNameAndBelief() {
         nickNameEditImage = (ImageView) headerView.findViewById(R.id.left_nav_view_nickname_edit_image);
         beliefEditImage = (ImageView) headerView.findViewById(R.id.left_nav_view_belief_edit_image);
@@ -303,6 +458,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //如果对头像进行了修改，在这里进行重启后的恢复
     private void restoreCircleImage() {
         List<ImageData> theImage = DataSupport.where("imageId = ?", "1").find(ImageData.class);
         if (theImage.size() != 0) {
@@ -311,6 +467,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    //对头像的具体修改，包含照相以及从相册中读取
     private void changeCircleImage() {
         circleImageView = (CircleImageView) headerView.findViewById(R.id.left_nav_circle_image);
         circleImageView.setOnClickListener(new View.OnClickListener() {
@@ -348,88 +506,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case 1:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    imageUtils.chooseFromAlbum();
-                    circleImageDialog.dismiss();
-                } else {
-                    Toast.makeText(MainActivity.this, "你拒绝了应用获取读取SD卡的权限，想要读取SD卡请授权", Toast.LENGTH_SHORT).show();
-                    circleImageDialog.dismiss();
-                }
-                break;
-            case 2:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    imageUtils.chooseImageAtCarouselFigure();
-                } else {
-                    Toast.makeText(MainActivity.this, "你拒绝了应用获取读取SD卡的权限，想要读取SD卡请授权", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            default:
-                break;
-        }
-    }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case ImageUtils.TAKE_PHOTO:
-                if (resultCode == RESULT_OK) {
-                    if (imageUtils.hasSDCard()) {
-                        File tempFile = new File(getExternalCacheDir(), "photo_image.jpg");
-                        Uri tempUri = null;
-                        if (Build.VERSION.SDK_INT >= 24) {
-                            tempUri = FileProvider.getUriForFile(MainActivity.this, "com.anrikuwen.mydiary.mainactivity.fileprovider", tempFile);
-                        } else {
-                            tempUri = Uri.fromFile(tempFile);
-                        }
-                        imageUtils.cropRawPhoto(tempUri);
-                    } else {
-                        Toast.makeText(MainActivity.this, "没有SD卡", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                break;
-            case ImageUtils.CHOOSE_FROM_ALBUM:
-                String imagePath;
-                if (resultCode == RESULT_OK) {
-                    if (Build.VERSION.SDK_INT >= 19) {
-                        imagePath = imageUtils.handleOnKitKat(data);
-                    } else {
-                        imagePath = imageUtils.handleBeforeKitKat(data);
-                    }
-                    Bitmap imageBitmap = imageUtils.compressImage(imagePath, 400, 400);
-                    circleImageView.setImageBitmap(imageBitmap);
-                    storeImageBitmap(imageBitmap);
-                }
-                break;
-            case ImageUtils.CHOOSE_IMAGE_AT_CAROUSEL_FIGURE:
-                String carouselFigureImagePath;
-                if (resultCode == RESULT_OK) {
-                    if (Build.VERSION.SDK_INT >= 19) {
-                        carouselFigureImagePath = imageUtils.handleOnKitKat(data);
-                    } else {
-                        carouselFigureImagePath = imageUtils.handleBeforeKitKat(data);
-                    }
-                    Bitmap carouselFigureBitmap = imageUtils.compressImage(carouselFigureImagePath, 400, 800);
-                    imageViews.get(currentItem).setImageBitmap(carouselFigureBitmap);
-                    storeCarouselFigureBitmap(carouselFigureBitmap);
-                }
-                break;
-            case ImageUtils.CUT_IMAGE:
-                if (data != null) {
-                    Bundle bundle = data.getExtras();
-                    if (bundle != null) {
-                        Bitmap bitmap = bundle.getParcelable("data");
-                        circleImageView.setImageBitmap(bitmap);
-                        storeImageBitmap(bitmap);
-                    }
-                }
-                break;
-        }
-    }
-
+    //如果对轮播图片进行了修改，在这里进行图片的存储
     private void storeCarouselFigureBitmap(Bitmap carouselFigureBitmap) {
         CarouselFigureData carouselFigureData = new CarouselFigureData();
         List<CarouselFigureData> carouselFigureDatas;
@@ -444,20 +522,7 @@ public class MainActivity extends AppCompatActivity {
         carouselFigureData.saveFast();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
-        }
-        return true;
-    }
-
+    //如果对头像进行了修改，在这里进行头像的存储
     private void storeImageBitmap(Bitmap bitmap) {
         ImageData imageData = new ImageData();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -472,37 +537,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void initView() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        leftNavigationView = (NavigationView) findViewById(R.id.left_nav_view);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.mipmap.ic_nav_menu);
-        }
-
-        leftNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.nav_menu_diary:
-                        enterDiary();
-                        break;
-                    case R.id.nav_menu_password:
-                        setPassword();
-                        break;
-                    case R.id.nav_menu_settings:
-                        enterSetting();
-                    default:
-                        break;
-                }
-                return true;
-            }
-        });
-    }
-
+    //进入设置前的逻辑判断
     private void enterSetting() {
         SharedPreferences prefPasswordData = getSharedPreferences("PasswordData", MODE_PRIVATE);
         final String password = prefPasswordData.getString("password", "");
@@ -538,6 +573,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //进入日记前的逻辑判断
     private void enterDiary() {
         SharedPreferences prefPasswordData = getSharedPreferences("PasswordData", MODE_PRIVATE);
         final String password = prefPasswordData.getString("password", "");
@@ -573,19 +609,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setPassword() {
-        SharedPreferences preferences = getSharedPreferences("PasswordData", MODE_PRIVATE);
-        String password = preferences.getString("password", "");
-        if (TextUtils.isEmpty(password)) {
-            Intent intent = new Intent(MainActivity.this, CreateAndModifyPassword.class);
-            startActivity(intent);
-        } else {
-            Intent intent = new Intent(MainActivity.this, EnsureBeforeModify.class);
-            startActivity(intent);
-        }
-    }
 
-
+    //由于多处会用到Dialog为了减少重复代码，这里添加了一个获取Dialog的方法
     private Dialog getDialog() {
         Dialog dialog = new Dialog(MainActivity.this);
         Window dialogWindow = dialog.getWindow();

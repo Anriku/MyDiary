@@ -29,11 +29,12 @@ public class ImageUtils {
     public static final int CHOOSE_FROM_ALBUM = 2;
     public static final int CUT_IMAGE = 3;
     public static final int CHOOSE_IMAGE_AT_CAROUSEL_FIGURE = 4;
-
     public ImageUtils(Context context) {
         this.context = context;
     }
 
+
+    //用相机照相的一个方法
     public void takePhoto() {
         File file = new File(context.getExternalCacheDir(), "photo_image.jpg");
         if (file.exists()) {
@@ -50,6 +51,7 @@ public class ImageUtils {
             imageUri = Uri.fromFile(file);
         }
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        //Android7.0后要加上这个
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         if (hasSDCard()) {
             intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
@@ -57,6 +59,7 @@ public class ImageUtils {
         ((MainActivity) context).startActivityForResult(intent, TAKE_PHOTO);
     }
 
+    //CircleView从相册中选图片的方法
     public void chooseFromAlbum() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
@@ -72,6 +75,7 @@ public class ImageUtils {
         ((MainActivity) context).startActivityForResult(intent, CHOOSE_FROM_ALBUM);
     }
 
+    //轮播图从相册中选的方法
     public void chooseImageAtCarouselFigure() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
@@ -88,6 +92,7 @@ public class ImageUtils {
     }
 
 
+    //对从相册中取出的图片进行处理来获取图片的路径，4.4之后由于Uri进行了封装要进行很多的判断
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public String handleOnKitKat(Intent intent) {
         String imagePath = null;
@@ -111,12 +116,14 @@ public class ImageUtils {
         return imagePath;
     }
 
+    //4.4之前全部都当成content类型的Uri来进行处理
     public String handleBeforeKitKat(Intent intent) {
         Uri uri = intent.getData();
         String imagePath = null;
         imagePath = getImagePath(uri, null);
         return imagePath;
     }
+
 
     private String getImagePath(Uri imageUri, String selection) {
         String path = null;
@@ -130,6 +137,7 @@ public class ImageUtils {
         return path;
     }
 
+    //对图片进行比例压缩
     public Bitmap compressImage(String imagePath, float pixelW, float pixelH) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
@@ -157,6 +165,7 @@ public class ImageUtils {
         return bitmap;
     }
 
+    //照了相之后对图片进行剪切
     public void cropRawPhoto(Uri uri) {
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -171,6 +180,7 @@ public class ImageUtils {
         ((MainActivity) context).startActivityForResult(intent, CUT_IMAGE);
     }
 
+    //照相前对手机进行是否有SD卡的判断
     public boolean hasSDCard() {
         String status = Environment.getExternalStorageState();
         if (status.equals(Environment.MEDIA_MOUNTED)) {
