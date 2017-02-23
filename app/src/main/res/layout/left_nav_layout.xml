@@ -22,7 +22,6 @@
             android:layout_width="@dimen/image_dimen_min"
             android:layout_height="@dimen/image_dimen_min"
             android:layout_marginTop="@dimen/text_view_margin_top"
-            android:layout_toRightOf="@id/left_nav_circle_image"
             android:src="@mipmap/ic_edit" />
 
         <TextView
@@ -48,7 +47,6 @@
             android:layout_width="@dimen/image_dimen_min"
             android:layout_height="@dimen/image_dimen_min"
             android:layout_marginTop="@dimen/text_view_margin_top_twice"
-            android:layout_toRightOf="@id/left_nav_circle_image"
             android:src="@mipmap/ic_edit" />
 
         <TextView
