@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        loginTextView = (TextView) findViewById(R.id.main_activity_text_view);
+        loginTextView = (TextView) findViewById(R.id.login_activity_text_view);
         Connector.getDatabase();
 
         SharedPreferences pref = getSharedPreferences("LoginTextData", MODE_PRIVATE);
