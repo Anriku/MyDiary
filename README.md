@@ -27,7 +27,7 @@
   * 对启动页的经典语录进行了设置。<br>
   * 一共有三个地方会用到密码，考虑到密码多了会让人输着烦，于是在设置中进行了密码的选择，选择哪些地方出现密码。<br>
   * 对主界面的轮播图时间进行了自定义。<br>
-  
+
 # 用到的知识点:<br>
 * 1.日记方面:<br>
   * ViewPager+RadioGroup+Fragment进行组合。RadioGroup通过selector设置了选中和没选中的不同颜色以及通过其中Shape的设置设置成了一个ios类型的<br>
@@ -40,8 +40,8 @@
   更新，于是想了想Fragment的生命周期在onResume中进行同样的操作，但还是不行。由于碎片依赖于Activity，于是，想在Activity中kill掉那个Fragment来进行
   从新开始Fragment，这样弄了下还是不行。实在那它没辙了，于是在网上找了找，发现在Fragment依赖的Acitivity中的onResume()方法中进行ViewPager的
   Adapter的notifyDataSetChange(),这样删除立即进行UI的更新，但是修改又不行了。于是继续在网上看了看他们的解决办法，发现在RecyclerView的Adapter中进
-  行ViewPager的Apater的notifyDataSetChange能行于是就这样做了,确实行得通。只是我把ViewPager和Adapter设置成了static，这样好像会破坏实例域的安全，
-  不知道是不是。本来不想这样的，但用了下前面Bundle的方法来传，但好像还是不得行，才这么做的。啊!心好累，真是个让人苦笑不得的debug过程。<br>
+  行ViewPager的Apater的notifyDataSetChange能行于是就这样做了,确实行得通。只是我把ViewPager和Adapter设置成了static，这样好像会破坏实例域的安全，
+  不知道是不是。本来不想这样的，但用了下前面Bundle的方法来传，但好像还是不得行，才这么做的。啊!心好累，真是个让人苦笑不得的debug过程。<br>
   * 对日记通过LitePal进行CRUD操作<br>
 * 2.密码方面:<br>
   * 通过SharedPreferences进行密码的存储，以及读取。<br>
