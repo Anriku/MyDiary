@@ -46,6 +46,9 @@ public class CreateAndModifyPassword extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 questionNum++;
+                if(questionNum == questions.length){
+                    questionNum = 0;
+                }
                 questionEdit.setHint(questions[questionNum]);
             }
         });
