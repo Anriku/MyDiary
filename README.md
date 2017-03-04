@@ -35,8 +35,8 @@
   * 通过Spinner进行天气以及心情的图标选择。Spinner通过自定义一个布局并在Adapter中的getView()方法中进行实例化其中的控件来实现图片的选择。<br>
   * 在项目的碎片中进行RecyclerView的使用并实现item的点击查看以及长按进行修改和删除，在查看的过程从从一个activity到另一个activity，要进行存储<br>
   的数据传递这里通过Bundle类的putSerializable()来进行对象的传递。<br>
-  * 通过Calendar进行时间、日期的获取,由于多处会用到所以自定义了一个类。<br>
-  * 由于在项目碎片中进行修改以及删除后UI不能立即更新。最初在碎片的onCreateView中用RecyclerView的Adapter来notififyDataSetChange()，但还是不能立即
+  * 通过Calendar进行时间、日期的获取,由于多处会用到所以自定义了一个类。<br>
+  * 由于在项目碎片中进行修改以及删除后UI不能立即更新。最初在碎片的onCreateView中用RecyclerView的Adapter来notififyDataSetChange()，但还是不能立即
   更新。于是想了想Fragment的生命周期在onResume中进行同样的操作，同样还是不行。由于碎片依赖于Activity，于是，想在Activity中kill掉那个Fragment来进
   行从新开始Fragment，这样弄了下还是不行。实在那它没辙了，于是在网上找了找，发现在Fragment依赖的Acitivity中的onResume()方法中进行ViewPager的
   Adapter的notifyDataSetChange(),这样修改立即进行UI的更新，但是删除又不行了。于是继续在网上看了看他们的解决办法，发现在RecyclerView的Adapter中进
