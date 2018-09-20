@@ -58,31 +58,32 @@ public class DiaryProjectRecAdapter extends RecyclerView.Adapter<DiaryProjectRec
         holder.timeText.setText(diaryData.getDiaryTime());
         holder.titleText.setText(diaryData.getDiaryTitle());
 
-        /**
-         * 点击RecyclerView的item进行查看内容
-         */
-        holder.RecView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, DiaryProjectRecItemActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("DiaryItemData", diaryData);
-                intent.putExtras(bundle);
-                context.startActivity(intent);
-            }
-        });
+//        /**
+//         * 点击RecyclerView的item进行查看内容
+//         */
+//        holder.RecView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(context, DiaryProjectRecItemActivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("DiaryItemData", diaryData);
+//                intent.putExtras(bundle);
+//                context.startActivity(intent);
+//            }
+//        });
 
         /**
          * 长按RecyclerView的item进行修改和删除对应的日记
          */
-        holder.RecView.setOnLongClickListener(new View.OnLongClickListener() {
+        holder.RecView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View v) {
+            public void onClick(View v) {
                 final Dialog dialog = new Dialog(context);
                 Window dialogWindow = dialog.getWindow();
                 WindowManager.LayoutParams params = dialogWindow.getAttributes();
                 params.gravity = Gravity.CENTER;
                 dialogWindow.setAttributes(params);
+                dialogWindow.setWindowAnimations(R.style.DialogAnim);
                 dialog.setContentView(R.layout.diary_project_rec_item_long_dialog);
                 dialog.show();
                 Button changeButton = (Button) dialog.findViewById(R.id.diary_project_rec_item_chang);
@@ -112,7 +113,6 @@ public class DiaryProjectRecAdapter extends RecyclerView.Adapter<DiaryProjectRec
                         dialog.dismiss();
                     }
                 });
-                return true;
             }
         });
 

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.TextView;
 
+import com.anrikuwen.mydiary.BaseActivity;
 import com.anrikuwen.mydiary.R;
 
 import org.litepal.tablemanager.Connector;
@@ -15,7 +16,7 @@ import org.litepal.tablemanager.Connector;
 /**
  * 这里的Login表示启动的意思，本Activity为启动Activity，最开始忘了Boot为启动，不要理解为登陆了
  */
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     private TextView loginTextView;
     private SharedPreferences prefPasswordData;

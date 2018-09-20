@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.anrikuwen.mydiary.BaseActivity;
 import com.anrikuwen.mydiary.R;
 import com.anrikuwen.mydiary.database.DiaryData;
 
@@ -14,7 +15,7 @@ import org.litepal.crud.DataSupport;
 
 import java.util.List;
 
-public class DiaryProjectRecItemActivity extends AppCompatActivity {
+public class DiaryProjectRecItemActivity extends BaseActivity {
     private TextView monthText;
     private TextView dayText;
     private TextView weekDayText;

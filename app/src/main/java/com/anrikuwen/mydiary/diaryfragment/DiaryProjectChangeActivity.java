@@ -8,12 +8,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.anrikuwen.mydiary.BaseActivity;
 import com.anrikuwen.mydiary.R;
 import com.anrikuwen.mydiary.database.DiaryData;
 
 import org.litepal.crud.DataSupport;
 
-public class DiaryProjectChangeActivity extends AppCompatActivity {
+public class DiaryProjectChangeActivity extends BaseActivity {
 
     private ImageView weatherImage;
     private ImageView moodImage;

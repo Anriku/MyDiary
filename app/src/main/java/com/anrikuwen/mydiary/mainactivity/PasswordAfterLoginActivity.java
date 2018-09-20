@@ -10,12 +10,14 @@ import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.anrikuwen.mydiary.BaseActivity;
 import com.anrikuwen.mydiary.R;
 
-public class PasswordAfterLoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class PasswordAfterLoginActivity extends BaseActivity implements View.OnClickListener {
 
     private EditText byPasswordEdit;
     private EditText byQuestionEdit;
@@ -26,8 +28,8 @@ public class PasswordAfterLoginActivity extends AppCompatActivity implements Vie
     private TextView byQuestionText;
     private Drawable afterEnterDrawable;
     private Drawable enterDrawable;
-    private CardView byPasswordCardView;
-    private CardView byQuestionCardView;
+    private LinearLayout byPasswordCardView;
+    private LinearLayout byQuestionCardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +41,8 @@ public class PasswordAfterLoginActivity extends AppCompatActivity implements Vie
         byQuestionButton = (Button) findViewById(R.id.password_after_login_by_question_ensure_button);
         byPasswordText = (TextView) findViewById(R.id.password_after_login_by_password_text);
         byQuestionText = (TextView) findViewById(R.id.password_after_login_by_question_text);
-        byPasswordCardView = (CardView) findViewById(R.id.password_after_login_by_password_card_view);
-        byQuestionCardView = (CardView) findViewById(R.id.password_after_login_by_question_card_view);
+        byPasswordCardView = (LinearLayout) findViewById(R.id.password_after_login_by_password_card_view);
+        byQuestionCardView = (LinearLayout) findViewById(R.id.password_after_login_by_question_card_view);
 
         pref = getSharedPreferences("PasswordData", MODE_PRIVATE);
         String question = pref.getString("question", "");

@@ -38,6 +38,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.anrikuwen.mydiary.BaseActivity;
 import com.anrikuwen.mydiary.R;
 import com.anrikuwen.mydiary.database.CarouselFigureData;
 import com.anrikuwen.mydiary.database.ImageData;
@@ -58,7 +59,7 @@ import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private DrawerLayout drawerLayout;
     private EditText dialogEdit;
@@ -615,6 +616,7 @@ public class MainActivity extends AppCompatActivity {
         Dialog dialog = new Dialog(MainActivity.this);
         Window dialogWindow = dialog.getWindow();
         WindowManager.LayoutParams params = dialogWindow.getAttributes();
+        dialogWindow.setWindowAnimations(R.style.DialogAnim);
         params.gravity = Gravity.CENTER;
         dialogWindow.setAttributes(params);
         return dialog;

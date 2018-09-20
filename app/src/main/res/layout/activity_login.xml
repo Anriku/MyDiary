@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/light_blue"
     android:gravity="center"
+    android:fitsSystemWindows="true"
     tools:context="com.anrikuwen.mydiary.mainactivity.LoginActivity">
 
 

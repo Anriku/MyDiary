@@ -11,9 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.anrikuwen.mydiary.BaseActivity;
 import com.anrikuwen.mydiary.R;
 
-public class CreateAndModifyPassword extends AppCompatActivity {
+public class CreateAndModifyPassword extends BaseActivity {
 
     private EditText firstEdit;
     private EditText secondEdit;

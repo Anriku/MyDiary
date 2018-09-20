@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.RadioGroup;
 
+import com.anrikuwen.mydiary.BaseActivity;
 import com.anrikuwen.mydiary.R;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.util.List;
 /**
  * Diary版块的主Activity
  */
-public class DiaryActivity extends AppCompatActivity {
+public class DiaryActivity extends BaseActivity {
 
     private DiaryProjectFragment projectFragment;
     private DiaryCalendarFragment calendarFragment;

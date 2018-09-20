@@ -11,29 +11,31 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.anrikuwen.mydiary.BaseActivity;
 import com.anrikuwen.mydiary.R;
 import com.anrikuwen.mydiary.mainactivity.MainActivity;
 
-public class Settings extends AppCompatActivity implements View.OnClickListener {
+public class Settings extends BaseActivity implements View.OnClickListener {
 
     private TextView loginTextTextView;
     private EditText loginTextEdit;
     private SharedPreferences prefLoginTextData;
     private SharedPreferences prefPasswordSelectData;
     private Button loginTextButton;
-    private CardView loginTextCardView;
+    private LinearLayout loginTextCardView;
     private TextView passwordSelectTextView;
-    private CardView passwordSelectCardView;
+    private LinearLayout passwordSelectCardView;
     private CheckBox bootPasswordCheckBox;
     private CheckBox enterDiaryPasswordCheckBox;
     private CheckBox enterSettingPasswordCheckBox;
     private TextView carouselFigureTextView;
     private EditText carouselFigureEdit;
     private Button carouselFigureButton;
-    private CardView carouselFigureCardView;
+    private LinearLayout carouselFigureCardView;
     private Drawable afterEnterDrawable;
     private Drawable enterDrawable;
 
@@ -45,16 +47,16 @@ public class Settings extends AppCompatActivity implements View.OnClickListener 
         loginTextTextView = (TextView) findViewById(R.id.setting_login_text);
         loginTextEdit = (EditText) findViewById(R.id.setting_login_text_edit);
         loginTextButton = (Button) findViewById(R.id.setting_login_text_ensure_button);
-        loginTextCardView = (CardView) findViewById(R.id.setting_login_text_card_view);
+        loginTextCardView = (LinearLayout) findViewById(R.id.setting_login_text_card_view);
         passwordSelectTextView = (TextView) findViewById(R.id.setting_password_select_text_view);
-        passwordSelectCardView = (CardView) findViewById(R.id.setting_password_select_card_view);
+        passwordSelectCardView = (LinearLayout) findViewById(R.id.setting_password_select_card_view);
         bootPasswordCheckBox = (CheckBox) findViewById(R.id.setting_password_select_boot_password_CB);
         enterDiaryPasswordCheckBox = (CheckBox) findViewById(R.id.setting_password_select_enter_diary_password_CB);
         enterSettingPasswordCheckBox = (CheckBox) findViewById(R.id.setting_password_enter_setting_password_CB);
         carouselFigureTextView = (TextView) findViewById(R.id.setting_carousel_figure_time_text);
         carouselFigureEdit = (EditText) findViewById(R.id.setting_carousel_figure_edit);
         carouselFigureButton = (Button) findViewById(R.id.setting_carousel_figure_button);
-        carouselFigureCardView = (CardView) findViewById(R.id.setting_carousel_figure_card_view);
+        carouselFigureCardView = (LinearLayout) findViewById(R.id.setting_carousel_figure_card_view);
 
         afterEnterDrawable = ContextCompat.getDrawable(Settings.this, R.mipmap.ic_after_enter);
         afterEnterDrawable.setBounds(0, 0, afterEnterDrawable.getIntrinsicWidth(), afterEnterDrawable.getIntrinsicHeight());

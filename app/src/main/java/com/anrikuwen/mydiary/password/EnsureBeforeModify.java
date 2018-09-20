@@ -9,9 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.anrikuwen.mydiary.BaseActivity;
 import com.anrikuwen.mydiary.R;
 
-public class EnsureBeforeModify extends AppCompatActivity {
+public class EnsureBeforeModify extends BaseActivity {
 
     private EditText oldPasswordEdit;
     private Button ensureButton;

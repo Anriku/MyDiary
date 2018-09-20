@@ -10,9 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.anrikuwen.mydiary.BaseActivity;
 import com.anrikuwen.mydiary.R;
 
-public class RetrievePassword extends AppCompatActivity {
+public class RetrievePassword extends BaseActivity {
 
     private EditText retrieveEdit;
     private Button retrieveButton;

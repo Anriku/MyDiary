@@ -6,10 +6,30 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:background="@color/light_blue"
+            android:fitsSystemWindows="true"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Diary"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_view_text_size" />
+
+    </FrameLayout>
+
     <RadioGroup
         android:id="@+id/diary_radio_group"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="100dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="@dimen/padding_twice">
@@ -18,7 +38,7 @@
             android:id="@+id/diary_radio_button_0"
             style="@style/RadioButton"
             android:layout_width="@dimen/radio_button_width"
-            android:layout_height="match_parent"
+            android:layout_height="30dp"
             android:background="@drawable/left_radio_button_selector"
             android:text="@string/project" />
 
@@ -26,7 +46,7 @@
             android:id="@+id/diary_radio_button_1"
             style="@style/RadioButton"
             android:layout_width="@dimen/radio_button_width"
-            android:layout_height="match_parent"
+            android:layout_height="30dp"
             android:background="@drawable/middle_radio_button_selector"
             android:text="@string/calendar" />
 
@@ -34,19 +54,10 @@
             android:id="@+id/diary_radio_button_2"
             style="@style/RadioButton"
             android:layout_width="@dimen/radio_button_width"
-            android:layout_height="match_parent"
+            android:layout_height="30dp"
             android:background="@drawable/right_radio_button_selector"
             android:text="@string/diary" />
     </RadioGroup>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin"
-        android:gravity="center"
-        android:text="Diary"
-        android:textColor="@color/light_blue"
-        android:textSize="@dimen/text_view_text_size" />
 
     <View
         android:layout_width="match_parent"
